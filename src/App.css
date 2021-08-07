@@ -1,0 +1,163 @@
+/* OPTION */
+body{ background:rgba(0,0,0,0.08); width:100%; height:100%; }
+*{ padding:0; margin:0; text-decoration:none; color:inherit; list-style:none; box-sizing:border-box; }
+.loading{ position:absolute; left:45%; top:45%; transform:translate(-50% -50%); z-index:99999; }
+.commonBox{ width:100%; float:left; }
+.commonBox > div{ width:1900px; margin:0 auto; }
+.commonBox > div > div{ width:100%; float:left; }
+input:focus{ outline:none; }
+
+
+/* login */
+.login{ width:100%; height:100%; position:relative; z-index:9999; }
+.login .loginCountainer{ width:100%; height:100%; position:fixed; }
+.login .loginWrap{ padding:80px 40px; width:40%; height:50%; position: absolute; top:50%; left:50%; transform:translate(-50%, -55%); background:#fff; box-shadow:0 0 8px #dbdbdb; text-align: center; }
+.login .loginWrap > div{ width:100%; float:left; padding-top:20px; }
+.login .loginWrap > div > *{ float:left; }
+.login .loginWrap > div > input{ height:60px; width:100%; float:right; border:none; background:#dbdbdb; font-size:20px; padding:0 20px; }
+.login .loginWrap > div.btnContainer button{ width:100%; padding:20px; }
+.login .loginWrap > div.btnContainer p{ padding-top:20px; }
+.login .loginWrap > div.btnContainer span{ cursor:pointer; }
+.hero{ width:100%; height:100%; position:fixed; z-index:9999; }
+/* login */
+
+/* input, selectbox, etc */
+.textFrm{ border:none; border-radius:20px; background:#ebebeb; padding:10px 0; width:100%; padding-left:15px; }
+.writeTitle{ border:none; width:100%; padding:10px 0 30px 0; }
+.writeContent{ border:none; width:100%; padding:10px 0 200px 0; }
+/* title , content */
+.tt{ width:15%; text-align:center; }
+.tc{ width:85%; }
+
+/* popup */
+.popup{ background:rgba(255,255,255, 0.6); position:fixed; width:100%; height:100%; z-index:999; display:none; }
+.popup > ul > li{ width:25%; height:50%; border-radius:15px; background:#fff; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); box-shadow:0 0 10px #ebebeb; }
+.popup ul > li > div{ width:100%; float:left; }
+.popup .title{ padding:20px 10px; border-bottom:solid 1px #dbdbdb; position:relative; }
+.popup .title .title_text{ font-size:20px; font-weight:600; text-align:center; }
+.popup .title .closeBtn{ position:absolute; right:20px; top:50%; transform:translateY(-50%); }
+.popup .title .closeBtn i{ font-size:25px; color:#ccc; cursor:pointer; }
+
+
+/* header */
+.header{ padding:20px 20px; width:100%; float:left; background:#fff; box-shadow:0 0 5px #999; position: fixed; z-index:99; }
+.header > ul > li{ width:33.3334%; float:left; line-height:30px; }
+.header .left{ text-align:left; }
+.header .center{ text-align:center; }
+.header .center > div{ display:inline-block; margin:0 40px; }
+.header .right{ text-align:right; }
+.header .right p{ float:right; margin-left:30px; }
+.header .right button{ cursor:pointer; background:#333; color:#fff; padding:10px 20px; border:none; border-radius:5px; }
+
+/* middle */
+.middle{ margin-top:70px; }
+.middle > div > div > ul{ width:100%; float:left; }
+.middle > div > div > ul > li{ width:33.3334%; float:left; line-height:30px; padding:20px; height:100%; }
+.middle .left{ text-align:left; width:20%; position:fixed; }
+.middle .left > div{ line-height:40px; }
+
+.middle .center{ width:60%; position: relative; left:20%; }
+.middle .center div{ width:100%; float:left; padding:10px; border-radius:5px; background:#fff; box-shadow: 0 0 5px #ccc; }
+.middle .writeFrm{ float:left; }
+.middle .writeFrm ul{ width:100%; float:left; }
+.middle .writeFrm li{ float:left; line-height:40px; }
+.middle .lists{ margin-top:20px; }
+.middle .lists > ul > li{ width:100%; float:left; }
+.middle .lists .lm{ padding:20px 0; }
+.middle .lists .lm img{ width:100%; height:500px; }
+.middle .lists .lt{ font-size:18px; font-weight:600; }
+.middle .lists .lb{ margin-top:10px; }
+
+.middle .right{ padding-left:2%; width:20%; position:relative; left:20%; }
+.middle .right > div{ width:100%; float:left; border-radius:10px; box-shadow: 0 0 5px #ccc; background:#fff; margin-bottom:20px; }
+.middle .right > .boxmenu_1{ height:100px; }
+.middle .right > .boxmenu_2{ height:200px; }
+.middle .right > .boxmenu_3{ height:150px; }
+
+.middle button{ background:none; border:1px solid #e1e1e1; border-radius:5px; padding:5px 20px; margin-right:10px; cursor:pointer; }
+
+
+/* wirtePopup */
+.popup .writeArea{ padding:10px; }
+.submitBtn button{ width:100%;  margin-top:20px; padding:10px 0; font:bold 16px malgun gothic; color:#999; }
+
+/* uploader */
+.uploader{ width:80% !important; padding:0 !important; position: relative; left:20%; }
+
+/* gaming */
+.gaming{ width:60% !important;  position: relative; left:20%; padding-top:20px; }
+.gaming .ele1{ width:100%; float:left; height:400px; background:url('korean_flag.jpeg') center center /cover;}
+
+.gaming .ele2{ width:100%; float:left; padding:20px 0; }
+.gaming .ele2 > ul{ float:left; width:100%; }
+.gaming .ele2 > ul > li{ float:left; width:100%; height:200px;  }
+.gaming .ele2 > ul > li > p{ line-height:33px; }
+.gaming .ele2 li > div{ width:100%;  float:left; border-radius:5px; box-shadow:0 0 8px #dbdbdb; background:#fff; padding:25px; }
+.gaming .ele2 img{ width:100%; height:100%; object-fit:cover; }
+/* gaming */
+
+/* subCenter */
+.subCenter{ width:60% !important;  position: relative; left:20%; padding-top:20px; }
+/* subCenter */
+
+/* menu2 */
+.menu2{ padding-top:40px; }
+.menu2 > div{ float:left; height:700px; }
+.menu2 .partLeft{ width:55%; }
+.menu2 .partRight{ width:45%; }
+.menu2 .partLeft > div{ width:100%; float:left; height:50%; }
+.menu2 .partLeft > div > p{ width:100%; float:left; background:#fff; height:100%; }
+.menu2 .partLeft > div:first-child{ padding-bottom:20px; }
+.menu2 .partLeft > div:last-child{ padding-top:20px; }
+.menu2 .partRight{ padding-left:40px; }
+.menu2 .partRight > p{ float:left; width:100%; height:100%; background:#fff;}
+/* menu2 */
+
+/* menu3 */
+.menu3 h1{ margin:40px 0; }
+.menu3 .products{ float:left; width:25%; height:300px; padding:0 15px; }
+.menu3 .products .img_area{ width:100%; height:60%; background:#fff;  }
+.menu3 .img_area label{ padding:0px 10px; background:#e74c3c; color:#fff; font-size:13px; float:left; }
+.menu3 .text_area{ padding:20px 0; }
+.menu3 .text_area p{ float:left; width:100%; text-align:left; }
+.menu3 .text_area .price{ font-size:25px; color:#e74c3c; }
+.menu3 .text_area .dPrice{ padding-left:20px; text-decoration:line-through; color:#999; }
+.menu3 .text_area .buyBtn{ margin-top:10px; background:#32cfb0; width:60%; color:#fff; text-align:center; padding:10px 0; font-weight:700; }
+/* menu3 */
+
+/* intro */
+
+.intro_test{ position:fixed; z-index:999999; width:100%; height:100%; background:#fdfbf5; animation:backgr 1s linear; animation-delay:4s; animation-fill-mode:forwards }
+.intro_test > svg{ position:absolute; width:100%; height:100%; text-align:center; }
+.intro_test img{ width:50%; position:absolute; top:45%; left:50%; transform:translateX(-50%); }
+.intro_test > svg > text{
+    font-size:10em;
+    position:absolute;
+    font-family:'Pacifico',cursive;
+    letter-spacing:35px;
+    fill:none;
+    stroke:#ff6666;
+    stroke-width:3px;
+    stroke-dasharray: 764px;
+    stroke-dashoffset: 764px;
+    animation: stroke 3s linear;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes backgr{
+    0%{ opacity:1 }
+    100%{ opacity:0; z-index:-999 }
+}
+@keyframes stroke{
+    0%{
+        stroke-dashoffset: 764px;
+    }
+    70%{
+        fill: transparent;
+        stroke-dashoffset: 0;
+    }
+    100%{
+        fill: #ff6666;
+        stroke-dashoffset: 0;
+    }
+}
