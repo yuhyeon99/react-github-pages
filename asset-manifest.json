@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-github-pages/static/css/main.84736067.chunk.css",
+    "main.js": "/react-github-pages/static/js/main.3d3b5cf1.chunk.js",
+    "main.js.map": "/react-github-pages/static/js/main.3d3b5cf1.chunk.js.map",
+    "runtime-main.js": "/react-github-pages/static/js/runtime-main.4e4954d5.js",
+    "runtime-main.js.map": "/react-github-pages/static/js/runtime-main.4e4954d5.js.map",
+    "static/js/2.c5edf42d.chunk.js": "/react-github-pages/static/js/2.c5edf42d.chunk.js",
+    "static/js/2.c5edf42d.chunk.js.map": "/react-github-pages/static/js/2.c5edf42d.chunk.js.map",
+    "static/js/3.1115c288.chunk.js": "/react-github-pages/static/js/3.1115c288.chunk.js",
+    "static/js/3.1115c288.chunk.js.map": "/react-github-pages/static/js/3.1115c288.chunk.js.map",
+    "index.html": "/react-github-pages/index.html",
+    "static/css/main.84736067.chunk.css.map": "/react-github-pages/static/css/main.84736067.chunk.css.map",
+    "static/js/2.c5edf42d.chunk.js.LICENSE.txt": "/react-github-pages/static/js/2.c5edf42d.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/react-github-pages/static/media/korean_flag.40017de4.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4e4954d5.js",
+    "static/js/2.c5edf42d.chunk.js",
+    "static/css/main.84736067.chunk.css",
+    "static/js/main.3d3b5cf1.chunk.js"
+  ]
+}
