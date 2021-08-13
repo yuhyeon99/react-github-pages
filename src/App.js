@@ -26,13 +26,13 @@ function App() {
   // login
   const fire = firebase;
   const [user, setUser] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(true);
   const [loading, setLoading] = useState(false);
-
 
   const clearInputs = () => {
     setEmail('');
@@ -91,6 +91,7 @@ function App() {
       if(user){
         clearInputs();
         setUser(user);
+        setUserEmail(fire.auth().currentUser.email);
       }else{
         setUser("");
       }
@@ -126,7 +127,7 @@ function App() {
           <li className="right">
             <div>
               {user?(      
-                <Hero user={user} handleLogout={handleLogout}/>
+                <Hero user={user} userEmail={userEmail} handleLogout={handleLogout}/>
             ):(<></>)}
             </div>
           </li>
@@ -208,7 +209,7 @@ function App() {
         </Route>
         <Route path='/board'>
           {user?(
-            <Board />
+            <Board email={userEmail} />
           ):(
             <Login 
               email={email} 

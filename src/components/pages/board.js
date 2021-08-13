@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Board = (test) => {
+const Board = (props) => {
     const [loading, setLoading] = useState(false);
     
     
@@ -30,12 +30,16 @@ const Board = (test) => {
     const [modifyTitle, setModifyTitle] = useState();
     const [modifyDesc, setModifyDesc] = useState();
 
+    const [filterVal, setFilterVal] = useState("title");
+    
+    const [searchTerm, setSearchTerm] = useState("");
+
     const ref = firebase.firestore().collection("crudtest");
 
 
     function getLists(){
         // setLoading(true);
-        ref.get().then((item)=>{
+        ref.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc) => doc.data());
             setLists(items);
             // setLoading(false);
@@ -43,6 +47,11 @@ const Board = (test) => {
     }
 
     function addBoard(newBoard){
+        if(!fileUrl){
+            alert('사진 업로드를 기다려주세요.');
+            return false;
+        }
+
         if(!title){
         alert('제목을 작성해주세요.');
         return false;
@@ -68,6 +77,10 @@ const Board = (test) => {
     }
 
     function editBoard(updateBoard){
+        if(!fileUrl){
+            alert('사진 업로드를 기다려주세요.');
+            return false;
+        }
         setLoading();
         
         ref
@@ -131,11 +144,11 @@ const Board = (test) => {
                     <ul>
                         <li className="userIcon">USER01</li>
                         <li className="userWrite">
-                        <input type="text" onChange={(e)=>setTitle(e.target.value)} className="writeTitle" value={title} placeholder="OOO님, 제목을 작성해주세요." />
-                        <input type="text" onChange={(e)=>setDesc(e.target.value)} className="writeContent" value={desc} placeholder="OOO님, 무슨 생각을 하고 계신가요?" />
+                        <input type="text" onChange={(e)=>setTitle(e.target.value)} className="writeTitle" value={title} placeHolder="OOO님, 제목을 작성해주세요." />
+                        <input type="text" onChange={(e)=>setDesc(e.target.value)} className="writeContent" value={desc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
                         <input type="file" onChange={onFileChange} />
                         </li>
-                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, id: uuidv4() })}>게시</button></li>
+                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:props.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
                     </ul>
                     </div>
                 </li>
@@ -153,8 +166,8 @@ const Board = (test) => {
                     <ul>
                         <li className="userIcon">USER01</li>
                         <li className="userWrite">
-                        <input type="text" onChange={(e)=>setModifyTitle(e.target.value)} className="writeTitle" value={modifyTitle} placeholder="OOO님, 제목을 작성해주세요." />
-                        <input type="text" onChange={(e)=>setModifyDesc(e.target.value)} className="writeContent" value={modifyDesc} placeholder="OOO님, 무슨 생각을 하고 계신가요?" />
+                        <input type="text" onChange={(e)=>setModifyTitle(e.target.value)} className="writeTitle" value={modifyTitle} placeHolder="OOO님, 제목을 작성해주세요." />
+                        <input type="text" onChange={(e)=>setModifyDesc(e.target.value)} className="writeContent" value={modifyDesc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
                         <input type="file" onChange={onFileChange} />
                         </li>
                         <li className="submitBtn"><button onClick={()=> editBoard({ title :modifyTitle, desc : modifyDesc, fileUrl, id: modifyId })}>수정 </button></li>
@@ -167,11 +180,33 @@ const Board = (test) => {
             <li className="center">
                 <div className="writeFrm">
                     <ul>
-                    <li className="tt"><p>WRITER</p></li>
-                    <li className="tc"><input readOnly onClick={()=>setWriteShow(!writeShow)} className="textFrm popupWrite" placeholder="원하시는 내용을 작성해주세요." type="text"/></li>
+                        <li className="tt"><p>WRITER</p></li>
+                        <li className="tc"><input readOnly onClick={()=>setWriteShow(!writeShow)} className="textFrm popupWrite" placeHolder="원하시는 내용을 작성해주세요." type="text"/></li>
+                        <li className="tt" style={{padding:'0 20px'}}>
+                            <select onChange={(e)=>setFilterVal(e.target.value)}>
+                                <option value="">검색목록</option>
+                                <option value="title">제목</option>
+                                <option value="email">작성자</option>
+                            </select>
+                        </li>
+                        <li className="tc">
+                            <input className="textFrm" type="text" placeHolder="Search..." onChange={(event)=>{ setSearchTerm(event.target.value) }} />
+                        </li>
                     </ul>
                 </div>
-                {lists.map((list) => (
+                {lists.filter((val)=>{
+                    if(searchTerm == ""){
+                        return val;
+                    }else if(filterVal == "title"){
+                        if(val.title.toString().toLowerCase().includes(searchTerm.toLowerCase()) ){
+                            return val;
+                        }
+                    }else if(filterVal == "email"){
+                        if(val.email.toString().toLowerCase().includes(searchTerm.toLowerCase()) ){
+                            return val;
+                        }
+                    }
+                }).map((list) => (
                 
                     <div className="list_01 lists" key={list.id}>
                     <ul>
@@ -187,8 +222,8 @@ const Board = (test) => {
                         </li>
                         </Link>
                         <li className="lb">
-                        <button onClick={ () => deleteBoard(list) }>삭제</button>
-                        <button onClick={ () => modifyBoard(list) }>수정</button>
+                            <button style={{display: list.email == props.email ? "" : "none" }} onClick={ () => deleteBoard(list) }>삭제</button>
+                            <button style={{display: list.email == props.email ? "" : "none" }} onClick={ () => modifyBoard(list) }>수정</button>
                         </li>
                     </ul>
                     </div>

@@ -5,7 +5,7 @@ const Hero = (props) => {
     return(
             <>
                 <p><button onClick={props.handleLogout}>Logout</button></p>
-                <p>HI! 님</p>
+                <p>HI! <b>{props.userEmail}</b>님</p>
             </>
     )
 }
