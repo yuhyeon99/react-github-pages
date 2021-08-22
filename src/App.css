@@ -127,7 +127,6 @@ input:focus{ outline:none; }
 /* menu3 */
 
 /* profile */
-.profile{  }
 .profile > div{ float:left; width:100%; }
 .profile .topTitle{ text-align: center; }
 

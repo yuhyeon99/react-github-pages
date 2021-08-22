@@ -14,20 +14,19 @@ const Profile = (props) =>{
         location:"Location",
         college:"College"
     });
+    
+    userRef.doc(userCurrent.uid).get().then((doc)=>{
+        if(doc.exists){
+            setInfo(doc.data());
+        }else{
+            console.log("none");
+        }
+    });
+    
 
-    function getInfo(){
-        userRef.doc(userCurrent.uid).get().then((doc)=>{
-            if(doc.name){
-                setInfo(doc.data());
-            }else{
-                console.log("none");
-            }
-        });
-    }
-
-    useEffect(()=>{
-        getInfo();
-    }, []);
+    // useEffect(()=>{
+    //     getInfo();
+    // }, []);
     return (
         <>
             <li className="profile subCenter" >
