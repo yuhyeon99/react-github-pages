@@ -2,11 +2,13 @@ import React from 'react';
 
 const Login = (props) => {
 
-    const { 
+    const {
         email, 
         setEmail, 
         password, 
         setPassword, 
+        introduce,
+        setIntroduce,
         handleLogin, 
         handleSignup, 
         hasAccount, 
@@ -18,7 +20,7 @@ const Login = (props) => {
         <section className="login">
             <div className="loginCountainer">
                 <div className="loginWrap">
-                    <h1>LOGIN & SIGN UP</h1>
+                    <h1>{hasAccount?("LOGIN"):("SIGN UP")}</h1>
                     <div>
                         <input 
                             type="text" 
@@ -40,6 +42,19 @@ const Login = (props) => {
                         />
                         <p className="errorMsg">{passwordError}</p>
                     </div>
+                    {!hasAccount ? (
+                        <div>
+                            <input 
+                                type="text"
+                                value={introduce}
+                                onChange={e => setIntroduce(e.target.value)}
+                                placeHolder="한줄프로필"
+                            />
+                        </div>
+                    ) : (
+                        <>
+                        </>
+                    )}
                     <div className="btnContainer">
                         {hasAccount ? (
                             <>

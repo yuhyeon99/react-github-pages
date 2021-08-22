@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Counter from './components/Counter';
 import firebase from './components/fire';
 require('firebase/auth');
-import Hero from './components/Hero';
+import Member from './components/Member';
 import Home from "./components/pages/menu1";
 import View from "./components/pages/list";
 import Board from "./components/pages/board.js";
 import Login from './components/Login';
+import Profile from './components/pages/profile';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import jQuery from "jquery";
@@ -25,9 +26,11 @@ function App() {
 
   // login
   const fire = firebase;
+  const userRef = firebase.firestore().collection("Users");
   const [user, setUser] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [userCurrent, setUserCurrent] = useState('');
   const [email, setEmail] = useState('');
+  const [introduce, setIntroduce] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -37,6 +40,7 @@ function App() {
   const clearInputs = () => {
     setEmail('');
     setPassword('');
+    setIntroduce('');
   }
 
   const clearErrors = () =>{
@@ -68,6 +72,14 @@ function App() {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        userRef
+          .doc(`${userCredential.user.uid}`)
+          .set({
+            introduce: introduce, 
+            uid : userCredential.user.uid
+          })
+      })
       .catch(err => {
         switch(err.code){
           case "auth/email-already-in-use":
@@ -83,6 +95,7 @@ function App() {
 
   const handleLogout = () => {
     fire.auth().signOut();
+    window.location.href='/board';
   };
 
   const authListener = () => {
@@ -91,7 +104,7 @@ function App() {
       if(user){
         clearInputs();
         setUser(user);
-        setUserEmail(fire.auth().currentUser.email);
+        setUserCurrent(fire.auth().currentUser);
       }else{
         setUser("");
       }
@@ -107,7 +120,7 @@ function App() {
   
   if(loading){
       return <h1 className="loading">Loading...</h1>
-  } 
+  }
 
   return (
     <BrowserRouter>
@@ -127,7 +140,7 @@ function App() {
           <li className="right">
             <div>
               {user?(      
-                <Hero user={user} userEmail={userEmail} handleLogout={handleLogout}/>
+                <Member user={user} userCurrent={userCurrent} handleLogout={handleLogout}/>
             ):(<></>)}
             </div>
           </li>
@@ -209,13 +222,15 @@ function App() {
         </Route>
         <Route path='/board'>
           {user?(
-            <Board email={userEmail} />
+            <Board userCurrent={userCurrent} />
           ):(
             <Login 
               email={email} 
               setEmail={setEmail} 
               password={password} 
               setPassword={setPassword} 
+              introduce = {introduce}
+              setIntroduce = {setIntroduce}
               handleLogin={handleLogin}
               handleSignup={handleSignup}
               hasAccount={hasAccount}
@@ -227,6 +242,13 @@ function App() {
         </Route>
         <Route path='/view/:id' component={View}>
             
+        </Route>
+        <Route path='/profile' >
+          <Profile 
+            user={user}
+            userCurrent={userCurrent}
+            userRef={userRef}
+          />
         </Route>
       </Switch>
             </ul>
