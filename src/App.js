@@ -30,7 +30,7 @@ function App() {
   const [user, setUser] = useState('');
   const [userCurrent, setUserCurrent] = useState('');
   const [email, setEmail] = useState('');
-  const [introduce, setIntroduce] = useState('');
+  const [massage, setMassage] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -40,7 +40,7 @@ function App() {
   const clearInputs = () => {
     setEmail('');
     setPassword('');
-    setIntroduce('');
+    setMassage('');
   }
 
   const clearErrors = () =>{
@@ -76,7 +76,11 @@ function App() {
         userRef
           .doc(`${userCredential.user.uid}`)
           .set({
-            introduce: introduce, 
+            name:"Name",
+            job:"Job",
+            location:"Location",
+            college:"College",
+            massage: massage, 
             uid : userCredential.user.uid
           })
       })
@@ -139,9 +143,9 @@ function App() {
           
           <li className="right">
             <div>
-              {user?(      
+              {/* {user?(      
                 <Member user={user} userCurrent={userCurrent} handleLogout={handleLogout}/>
-            ):(<></>)}
+            ):(<></>)} */}
             </div>
           </li>
         </ul>
@@ -222,15 +226,22 @@ function App() {
         </Route>
         <Route path='/board'>
           {user?(
+            <>
             <Board userCurrent={userCurrent} />
+            <li className="right">
+                <div className="boxmenu_1"> <Member user={user} userCurrent={userCurrent} handleLogout={handleLogout}/> </div>
+                <div className="boxmenu_2"></div>
+                <div className="boxmenu_3"></div>
+            </li>
+            </>
           ):(
             <Login 
               email={email} 
               setEmail={setEmail} 
               password={password} 
               setPassword={setPassword} 
-              introduce = {introduce}
-              setIntroduce = {setIntroduce}
+              massage = {massage}
+              setMassage = {setMassage}
               handleLogin={handleLogin}
               handleSignup={handleSignup}
               hasAccount={hasAccount}

@@ -46,7 +46,7 @@ const View =  () =>{
                     <li className="lc">
                         <p>{viewList.desc} </p>
                     </li>
-                    <li className="lm">
+                    <li className="lm viewLm">
                         <img src={viewList.fileUrl} alt={viewList.title} />
                     </li>
                     <li className="lb">

@@ -1,10 +1,123 @@
-import { React } from 'react';
+import { React, useState, useEffect } from 'react';
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Home = () => {
+
+
+function Home(){
+
+    const pUrl = process.env.PUBLIC_URL;
+
+    useEffect(()=>{        
+        const slide = document.querySelector(".slide");
+        const slideChildren = document.querySelectorAll('.slide > li');
+        const slideLen = slideChildren.length;
+        
+        let firstSlide = document.querySelector('.slide > li:first-child').cloneNode(true);
+        let lastSlide = document.querySelector('.slide > li:last-child').cloneNode(true);
+        
+        slideChildren[slideLen-1].after(firstSlide);
+        slideChildren[0].before(lastSlide);
+        
+        let slidePos = 0;
+
+        let status = true;
+
+        
+        const nextButton = () =>{
+            if(status == false){
+                return false;
+            }
+            status = false;
+
+            if(slidePos <= slideLen-1){
+                slide.style.cssText = `
+                    transition:all .5s ease-in-out;
+                    margin-left:-${(slidePos+2)*100}%;
+                `;
+            };
+            if(slidePos == slideLen-1){   
+                setTimeout(()=>{
+                    slide.style.cssText = `
+                        transition:all 0s;
+                        margin-left:-100%;
+                    `;
+                },500);
+                slidePos = -1;
+            };
+            slidePos ++;
+
+            setTimeout(()=>{
+                status=true;
+            },500);
+        };
+
+        const prevButton = () =>{
+            if(status == false){
+                return false;
+            }
+            status = false;
+
+            if(slidePos >= 0){
+                slide.style.cssText = `
+                    transition:all .5s ease-in-out;
+                    margin-left:-${slidePos*100}%;
+                `;
+            };
+            if(slidePos == 0){
+                setTimeout(()=>{
+                    slide.style.cssText = `
+                        transition:all 0s;
+                        margin-left:-${slideLen*100}%;
+                    `;
+                }, 500);
+
+                slidePos = slideLen;
+            }
+            slidePos --;
+
+            setTimeout(()=>{
+                status=true;
+            },500);
+        };
+
+        let slideInterval;
+
+        function startSlide(){
+            slideInterval = setInterval(nextButton, 4000);
+        }
+        function stopSlide(){
+            clearInterval(slideInterval);
+        }
+
+        startSlide();
+
+        let leftBtn = document.getElementById('leftBtn');
+        let rightBtn = document.getElementById('rightBtn');
+        
+        leftBtn.addEventListener('click', (e)=>{
+            stopSlide();startSlide();
+            prevButton();
+        });
+
+        rightBtn.addEventListener('click', (e)=>{
+            stopSlide();startSlide();
+            nextButton();
+        });
+
+    }, []);
     return (
         <li className="gaming">
             <div className="ele1">
-
+                <ul className="posBtn">
+                    <li id="leftBtn"><FontAwesomeIcon icon={faChevronLeft} /></li>
+                    <li id="rightBtn"><FontAwesomeIcon icon={faChevronRight} /></li>
+                </ul>
+                <ul className="slide">
+                    <li><img src={pUrl + '/images/img_1_layout_1.jpg'} /></li>
+                    <li><img src={pUrl + '/images/img_2_layout_1.jpg'} /></li>
+                    <li><img src={pUrl + '/images/img_3_layout_1.jpg'} /></li>
+                </ul>
             </div>
             <div className="ele2">
                 <ul>                 

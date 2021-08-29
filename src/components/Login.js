@@ -7,8 +7,8 @@ const Login = (props) => {
         setEmail, 
         password, 
         setPassword, 
-        introduce,
-        setIntroduce,
+        massage,
+        setMassage,
         handleLogin, 
         handleSignup, 
         hasAccount, 
@@ -46,8 +46,8 @@ const Login = (props) => {
                         <div>
                             <input 
                                 type="text"
-                                value={introduce}
-                                onChange={e => setIntroduce(e.target.value)}
+                                value={massage}
+                                onChange={e => setMassage(e.target.value)}
                                 placeHolder="한줄프로필"
                             />
                         </div>

@@ -42,6 +42,7 @@ const Board = (props) => {
 
     function getLists(){
         // setLoading(true);
+        console.log(ref);
         ref.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc) => doc.data());
             setLists(items);
@@ -151,7 +152,7 @@ const Board = (props) => {
                         <input type="text" onChange={(e)=>setDesc(e.target.value)} className="writeContent" value={desc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
                         <input type="file" onChange={onFileChange} />
                         </li>
-                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:props.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
+                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
                     </ul>
                     </div>
                 </li>
@@ -225,18 +226,13 @@ const Board = (props) => {
                         </li>
                         </Link>
                         <li className="lb">
-                            <button style={{display: list.email == props.email ? "" : "none" }} onClick={ () => deleteBoard(list) }>삭제</button>
-                            <button style={{display: list.email == props.email ? "" : "none" }} onClick={ () => modifyBoard(list) }>수정</button>
+                            <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => deleteBoard(list) }>삭제</button>
+                            <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => modifyBoard(list) }>수정</button>
                         </li>
                     </ul>
                     </div>
                 ))}
 
-            </li>
-            <li className="right">
-                <div className="boxmenu_1"></div>
-                <div className="boxmenu_2"></div>
-                <div className="boxmenu_3"></div>
             </li>
         </>
     );
