@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { faEdit, faUniversity, faCamera, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect } from 'react';
+import { faEdit, faUniversity, faCamera, faRedoAlt, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
+import firebase from '../fire';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Profile = (props) =>{
     const [update, setUpdate] = useState(true);
     const {user, userCurrent, userRef} = props;
+    const [loading, setLoading] = useState(false);
     
     const [info, setInfo] = useState({
         name:"Name",
@@ -24,6 +26,8 @@ const Profile = (props) =>{
         college:"College"
     });
     function getInfo(){
+        setLoading(false);
+
         userRef.doc(userCurrent.uid).get().then((doc)=>{
             if(doc.exists){
                 setInfo(doc.data());
@@ -32,6 +36,7 @@ const Profile = (props) =>{
     
             }
         });
+
     }
 
     const {name, massage, introduce, job, location, college} = updateInfo;
@@ -45,8 +50,32 @@ const Profile = (props) =>{
         });
     };
 
+    
+    const [fileUrl, setFileUrl] = useState('');
+    const docRef = userRef.doc(userCurrent.uid);
+    const storageRef = firebase.storage().ref();
+    let file = "";
+
+    const onFileChange = async (e) => {
+
+        file = e.target.files[0];
+
+        if(file){
+            const fileRef = storageRef.child(file.name);
+            await fileRef.put(file);
+            let temp = await fileRef.getDownloadURL();
+            await docRef
+            .update({profileImg:temp})
+            .catch((err)=>{
+                console.log(err);
+            });
+        }
+
+        getInfo();
+
+    }
+
     function updateProfile(updateInfo){
-        const docRef = userRef.doc(userCurrent.uid);
         docRef
         .update(updateInfo)
         .catch((err)=>{
@@ -61,6 +90,10 @@ const Profile = (props) =>{
        getInfo(); 
     }, []);
     
+    if(loading){
+        return <h1 className="loading">Loading...</h1>
+    }
+
     return (
         <>
             <li className="profile subCenter" >
@@ -70,11 +103,20 @@ const Profile = (props) =>{
                 <div className="infoBox">
                     <ul>
                         <li className="infoBg"></li>
-                        <li className="profileImg"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faCamera} /></li>
+                        <label for="change_file">
+                            <li className="profileImg" style={info.profileImg ? {background:`url(${info.profileImg})center center /cover`} : {} }>
+                                {info.profileImg ? (
+                                    <></>
+                                ) : (
+                                    <FontAwesomeIcon style={{cursor:"pointer"}} icon={faCamera} />
+                                )}
+                            </li>
+                        </label>
+                        <input id="change_file" type="file" style={{display:'none'}} onChange={onFileChange} />
                         <li className="infoArea">
                             {update ? (
                                 <>
-                                    <p className="update"><FontAwesomeIcon onClick={()=>setUpdate(!update)} style={{cursor:"pointer"}} icon={faEdit} /></p>
+                                    <p className="update"><button type="button" onClick={()=>setUpdate(!update)} style={{cursor:"pointer"}} > 수정 </button></p>
                                     <p className="name">{info.name}</p>
                                     <p className="college"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faUniversity} /> {info.college}</p>
                                     <p className="job">{info.job}</p>
@@ -84,7 +126,7 @@ const Profile = (props) =>{
                                 </>
                             ) : (
                                 <>
-                                    <p className="update"><FontAwesomeIcon onClick={()=>updateProfile(updateInfo)} style={{cursor:"pointer"}} icon={faRedoAlt} /></p>
+                                    <p className="update"><button type="button" onClick={()=>updateProfile(updateInfo)} style={{cursor:"pointer"}}> 완료 </button></p>
                                     <p className="name">{info.name} <input type="text" name="name" placeHolder="Name" onChange={onChange}  value={name} /> </p>
                                     <p className="college">
                                         <FontAwesomeIcon style={{cursor:"pointer"}} icon={faUniversity} /> 
@@ -100,6 +142,18 @@ const Profile = (props) =>{
                         </li>
                     </ul>
                 </div>
+                <div className="infoBox">
+                    <ul>
+                        <li className="infoArea">
+                            <p className="career">학력</p>
+                            <p className="editBtn">+</p>
+                            {/* info */}
+                            <p className="graduate">image</p>
+                            <p class="gInfo"><span>영진전문대학교</span><br/><span>학사, 컴퓨터정보계열</span><br/><span>2021-2024년</span></p>
+                            <p className="editArea">pen</p>
+                        </li>
+                    </ul>
+                </div>  
             </li>
         </>
     )

@@ -164,6 +164,16 @@ input:focus{ outline:none; }
 .profile .infoArea .active{ color:#fff; background:steelblue; border:none; }
 .profile .infoArea p:nth-child(8){ margin:20px 10px; }
 
+.profile .infoArea .career{ text-align: left; width:50%; font-size:23px; margin:20px 0; font-weight:lighter; }
+.profile .infoArea .editBtn{ text-align: right; width:50%; font-size:40px; margin:20px 0; font-weight:lighter; }
+
+.profile .infoArea .graduate{ width:15%; }
+.profile .infoArea .gInfo{ width:70%; line-height:20px; }
+.profile .infoArea .gInfo span:nth-of-type(1){ font-size:18px; font-weight:600; }
+.profile .infoArea .gInfo span:nth-of-type(3){ font-size:14px; color:#999; }
+.profile .infoArea .editArea{ width:15%; }
+
+
 /* profile */
 
 /* intro */

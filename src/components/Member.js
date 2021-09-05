@@ -1,18 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Member = (props) => {
 
-    const {handleLogout,userCurrent} = props;
-    
+    const {userRef,handleLogout,userCurrent} = props;
+    const [profileImg, setProfileImg] = useState('');
+
+    userRef.doc(userCurrent.uid).get().then((doc)=>{
+        const fileUrl = doc.data().profileImg;
+        setProfileImg(fileUrl);
+    });
+
+
     return(
             <>
                 <ul>
                     <li className="memberBg"></li>
                     <li className="memberImg">
-                        <div><FontAwesomeIcon style={{cursor:"pointer"}} icon={faCamera} /></div>
+                        <div style={profileImg ? {background:`url(${profileImg})center center /cover`} : {} } >
+                            {profileImg ? (
+                                <></>
+                            ) : (
+                                <FontAwesomeIcon style={{cursor:"pointer"}} icon={faCamera} />
+                            )}
+                        </div>
                     </li>
                     <li className="memberText">
                         <Link to="/profile">

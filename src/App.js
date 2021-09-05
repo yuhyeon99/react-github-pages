@@ -229,7 +229,7 @@ function App() {
             <>
             <Board userCurrent={userCurrent} />
             <li className="right">
-                <div className="boxmenu_1"> <Member user={user} userCurrent={userCurrent} handleLogout={handleLogout}/> </div>
+                <div className="boxmenu_1"> <Member userRef={userRef} user={user} userCurrent={userCurrent} handleLogout={handleLogout}/> </div>
                 <div className="boxmenu_2"></div>
                 <div className="boxmenu_3"></div>
             </li>

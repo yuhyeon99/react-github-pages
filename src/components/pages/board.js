@@ -15,14 +15,19 @@ const Board = (props) => {
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
     const [fileUrl, setFileUrl] = useState('');
+    let file = "";
+    let uploadStatus=true;
 
     const onFileChange = async (e) => {
-        const file = e.target.files[0];
+        uploadStatus = false;
+        file = e.target.files[0];
+        
         const storageRef = firebase.storage().ref();
         const fileRef = storageRef.child(file.name);
         await fileRef.put(file);
         setFileUrl(await fileRef.getDownloadURL());
-        console.log(fileUrl);
+
+        uploadStatus = true;
     }
     
     const [writeShow, setWriteShow] = useState(false);
@@ -42,7 +47,6 @@ const Board = (props) => {
 
     function getLists(){
         // setLoading(true);
-        console.log(ref);
         ref.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc) => doc.data());
             setLists(items);
@@ -50,19 +54,20 @@ const Board = (props) => {
         });
     }
 
-    function addBoard(newBoard){
-        if(!fileUrl){
-            alert('사진 업로드를 기다려주세요.');
+    async function addBoard(newBoard){
+        
+        if(!uploadStatus){
+            alert('이미지 업로드 중입니다.');
             return false;
         }
 
         if(!title){
         alert('제목을 작성해주세요.');
-        return false;
+         return false;
         }
         if(!desc){
         alert('내용을 작성해주세요.');
-        return false;
+         return false;
         }
         ref
         .doc(newBoard.id)
@@ -80,11 +85,13 @@ const Board = (props) => {
     
     }
 
-    function editBoard(updateBoard){
-        if(!fileUrl){
-            alert('사진 업로드를 기다려주세요.');
+    async function editBoard(updateBoard){
+
+        if(!uploadStatus){
+            alert('이미지 업로드 중입니다.');
             return false;
         }
+        
         setLoading();
         
         ref
@@ -149,7 +156,7 @@ const Board = (props) => {
                         <li className="userIcon">USER01</li>
                         <li className="userWrite">
                         <input type="text" onChange={(e)=>setTitle(e.target.value)} className="writeTitle" value={title} placeHolder="OOO님, 제목을 작성해주세요." />
-                        <input type="text" onChange={(e)=>setDesc(e.target.value)} className="writeContent" value={desc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
+                        <textarea onChange={(e)=>setDesc(e.target.value)} className="writeContent" value={desc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
                         <input type="file" onChange={onFileChange} />
                         </li>
                         <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
