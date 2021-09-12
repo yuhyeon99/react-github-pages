@@ -101,7 +101,7 @@ const Profile = (props) =>{
     useEffect(()=>{
        getInfo(); 
        getStudy();
-    }, []);
+    }, [study]);
     
     if(loading){
         return <h1 className="loading">Loading...</h1>
