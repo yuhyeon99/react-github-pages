@@ -6,12 +6,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Member = (props) => {
 
     const {userRef,handleLogout,userCurrent} = props;
-    const [profileImg, setProfileImg] = useState('');
+    const [memberImg, setMemberImg] = useState([]);
 
-    userRef.doc(userCurrent.uid).get().then((doc)=>{
-        const fileUrl = doc.data().profileImg;
-        setProfileImg(fileUrl);
-    });
+    function getMember(){
+        
+        userRef.doc(userCurrent.uid).get().then((doc)=>{
+            const fileUrl = doc.data().profileImg;
+            setMemberImg(fileUrl);
+        }).catch((err)=>{
+            console.log(err);
+        });
+        
+    }
+
+    useEffect(()=>{
+        getMember();
+    },[]);
 
 
     return(
@@ -19,8 +29,8 @@ const Member = (props) => {
                 <ul>
                     <li className="memberBg"></li>
                     <li className="memberImg">
-                        <div style={profileImg ? {background:`url(${profileImg})center center /cover`} : {} } >
-                            {profileImg ? (
+                        <div style={memberImg ? {background:`url(${memberImg})center center /cover`} : {} } >
+                            {memberImg ? (
                                 <></>
                             ) : (
                                 <FontAwesomeIcon style={{cursor:"pointer"}} icon={faCamera} />

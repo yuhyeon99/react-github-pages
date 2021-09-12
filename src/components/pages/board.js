@@ -229,7 +229,12 @@ const Board = (props) => {
                             <p>{list.desc} </p>
                         </li>
                         <li className="lm">
-                            <img src={list.fileUrl} alt={list.title} />
+                            {list.fileUrl? (
+                                <img src={list.fileUrl} alt={list.title} />
+                            ) : (
+                                <>
+                                </>
+                            )}
                         </li>
                         </Link>
                         <li className="lb">

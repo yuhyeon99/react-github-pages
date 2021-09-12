@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { faEdit, faUniversity, faCamera, faRedoAlt, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faUniversity, faCamera, faPlus, faRedoAlt, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
 import firebase from '../fire';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Profile = (props) =>{
     const [update, setUpdate] = useState(true);
-    const {user, userCurrent, userRef} = props;
+    const [studyList,setStudyList] = useState([]);
+    
+    const {user, userCurrent, userRef, study, setStudy} = props;
+
+    const studyRef = firebase.firestore().collection("study");
+    
+    
     const [loading, setLoading] = useState(false);
     
     const [info, setInfo] = useState({
@@ -16,7 +22,7 @@ const Profile = (props) =>{
         location:"Location",
         college:"College"
     });
-
+    
     const [updateInfo, setUpdateInfo] = useState({
         name:"Name",
         massage:"Massage",
@@ -36,7 +42,13 @@ const Profile = (props) =>{
     
             }
         });
+    }
 
+    function getStudy(){
+        studyRef.orderBy("dateTime","desc").get().then((item)=>{
+            const items = item.docs.map((doc)=>doc.data());
+            setStudyList(items);
+        });
     }
 
     const {name, massage, introduce, job, location, college} = updateInfo;
@@ -88,6 +100,7 @@ const Profile = (props) =>{
 
     useEffect(()=>{
        getInfo(); 
+       getStudy();
     }, []);
     
     if(loading){
@@ -130,7 +143,7 @@ const Profile = (props) =>{
                                     <p className="name">{info.name} <input type="text" name="name" placeHolder="Name" onChange={onChange}  value={name} /> </p>
                                     <p className="college">
                                         <FontAwesomeIcon style={{cursor:"pointer"}} icon={faUniversity} /> 
-                                        {info.college} 
+                                         {info.college} 
                                         <input type="text" onChange={onChange} name="college" placeHolder="College" value={college} /> 
                                     </p>
                                     <p className="job">{info.job} <input type="text" name="job" onChange={onChange} placeHolder="Job" value={job} /></p>
@@ -146,11 +159,14 @@ const Profile = (props) =>{
                     <ul>
                         <li className="infoArea">
                             <p className="career">학력</p>
-                            <p className="editBtn">+</p>
-                            {/* info */}
-                            <p className="graduate">image</p>
-                            <p class="gInfo"><span>영진전문대학교</span><br/><span>학사, 컴퓨터정보계열</span><br/><span>2021-2024년</span></p>
-                            <p className="editArea">pen</p>
+                            <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setStudy(!study)} style={{cursor:"pointer"}} icon={faPlus} /></p>
+                            {studyList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
+                                <div className="studyList">
+                                    <p className="graduate"><img src={list.fileUrl}/></p>
+                                    <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
+                                    <p className="editArea">pen</p>
+                                </div>
+                            ))}
                         </li>
                     </ul>
                 </div>  
