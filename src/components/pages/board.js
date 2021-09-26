@@ -11,7 +11,7 @@ const Board = (props) => {
 
     const [loading, setLoading] = useState(false);
     
-    
+    const [progress, setProgress] = useState('');
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
     const [fileUrl, setFileUrl] = useState('');
@@ -24,12 +24,23 @@ const Board = (props) => {
         
         const storageRef = firebase.storage().ref();
         const fileRef = storageRef.child(file.name);
-        await fileRef.put(file);
+        const uploadTask = fileRef.put(file);
+        uploadTask.on(
+            "state_changed",
+            snapshot =>{
+                const progress = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                setProgress(progress);
+            },error=>{
+                console.log(error);
+            }
+        )
         setFileUrl(await fileRef.getDownloadURL());
 
         uploadStatus = true;
     }
-    
+    let photoFile = document.getElementById('photoFile');
     const [writeShow, setWriteShow] = useState(false);
     const [modifyShow, setModifyShow] = useState(false);
     const [lists, setLists] = useState([]);
@@ -82,6 +93,8 @@ const Board = (props) => {
         setTitle('');
         setDesc('');
         setFileUrl('');
+        setProgress(0);
+        photoFile.value = "";
     
     }
 
@@ -105,6 +118,8 @@ const Board = (props) => {
             getLists();
         },300);
         setModifyShow(false);
+
+        setProgress(0);        
     }
 
     function deleteBoard(list){
@@ -157,7 +172,8 @@ const Board = (props) => {
                         <li className="userWrite">
                         <input type="text" onChange={(e)=>setTitle(e.target.value)} className="writeTitle" value={title} placeHolder="OOO님, 제목을 작성해주세요." />
                         <textarea onChange={(e)=>setDesc(e.target.value)} className="writeContent" value={desc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
-                        <input type="file" onChange={onFileChange} />
+                        <progress value={progress} max="100" /> <br />
+                        <input type="file" id="photoFile" onChange={onFileChange} />
                         </li>
                         <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
                     </ul>
@@ -178,7 +194,8 @@ const Board = (props) => {
                         <li className="userIcon">USER01</li>
                         <li className="userWrite">
                         <input type="text" onChange={(e)=>setModifyTitle(e.target.value)} className="writeTitle" value={modifyTitle} placeHolder="OOO님, 제목을 작성해주세요." />
-                        <input type="text" onChange={(e)=>setModifyDesc(e.target.value)} className="writeContent" value={modifyDesc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
+                        <textarea onChange={(e)=>setModifyDesc(e.target.value)} className="writeContent" value={modifyDesc} placeHolder="OOO님, 무슨 생각을 하고 계신가요?" />
+                        <progress value={progress} max="100" /> <br />
                         <input type="file" onChange={onFileChange} />
                         </li>
                         <li className="submitBtn"><button onClick={()=> editBoard({ title :modifyTitle, desc : modifyDesc, fileUrl, id: modifyId })}>수정 </button></li>

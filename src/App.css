@@ -11,7 +11,7 @@ input:focus{ outline:none; }
 /* login */
 .login{ width:100%; height:100%; position:relative; z-index:9999; }
 .login .loginCountainer{ width:100%; height:100%; position:fixed; }
-.login .loginWrap{ padding:80px 40px; width:40%; height:50%; position: absolute; top:50%; left:50%; transform:translate(-50%, -55%); background:#fff; box-shadow:0 0 8px #dbdbdb; text-align: center; }
+.login .loginWrap{ padding:80px 40px; width:40%; position: absolute; top:50%; left:50%; transform:translate(-50%, -55%); background:#fff; box-shadow:0 0 8px #dbdbdb; text-align: center; }
 .login .loginWrap > div{ width:100%; float:left; padding-top:20px; }
 .login .loginWrap > div > *{ float:left; }
 .login .loginWrap > div > input{ height:60px; width:100%; float:right; border:none; background:#dbdbdb; font-size:20px; padding:0 20px; }
@@ -32,7 +32,7 @@ input:focus{ outline:none; }
 
 /* popup */
 .popup{ background:rgba(255,255,255, 0.6); position:fixed; width:100%; height:100%; z-index:999; display:none; }
-.popup > ul > li{ width:25%; height:50%; border-radius:15px; background:#fff; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); box-shadow:0 0 10px #ebebeb; }
+.popup > ul > li{ width:25%; border-radius:15px; background:#fff; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); box-shadow:0 0 10px #ebebeb; }
 .popup ul > li > div{ width:100%; float:left; }
 .popup .title{ padding:20px 10px; border-bottom:solid 1px #dbdbdb; position:relative; }
 .popup .title .title_text{ font-size:20px; font-weight:600; text-align:center; }
@@ -89,7 +89,7 @@ input:focus{ outline:none; }
 
 /* wirtePopup */
 .popup .writeArea{ padding:10px; }
-.submitBtn button{ width:100%;  margin-top:20px; padding:10px 0; font:bold 16px malgun gothic; color:#999; }
+.submitBtn button{ width:100%;  margin-top:20px; padding:10px 0; font:bold 16px malgun gothic; color:#3b5998; border:solid 1px #3b5998 }
 
 /* uploader */
 .uploader{ width:80% !important; padding:0 !important; position: relative; left:20%; }
@@ -174,6 +174,7 @@ input:focus{ outline:none; }
 .profile .infoArea .gInfo span:nth-of-type(1){ font-size:18px; font-weight:600; }
 .profile .infoArea .gInfo span:nth-of-type(3){ font-size:14px; color:#999; }
 .profile .infoArea .editArea{ width:15%; text-align: right; }
+.profile .infoArea .summary{ width:85%; }
 
 .studyPopup{ width:100%; height:100%; position:fixed; z-index:999; background:rgba(0,0,0,0.5); }
 .studyPopup .inner{ position:relative; width:40%; height:90%; border-radius:10px; background:#fff; transform:translate(-50%, -50%); left:50%; top:50%; box-shadow:0 3px 3px #333;}

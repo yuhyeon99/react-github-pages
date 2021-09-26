@@ -28,6 +28,8 @@ function App() {
   const fire = firebase;
   const userRef = firebase.firestore().collection("Users");
   const [study, setStudy] = useState(false);
+  const [career, setCareer] = useState(false);
+  const [summary, setSummary] = useState(false);
   const [user, setUser] = useState('');
   const [userCurrent, setUserCurrent] = useState('');
   const [email, setEmail] = useState('');
@@ -82,15 +84,15 @@ function App() {
   }
 
   const studyRef = fire.firestore().collection("study");
-  const submitStudy = async (e) =>{
-    if(!uploadStatus){
-        alert('이미지 업로드 중입니다.');
-        return false;
-    }
+const submitStudy = async (e) =>{
+   if(!uploadStatus){
+       alert('이미지 업로드 중입니다.');
+       return false;
+   }
 
-    if(!confirm("저장히시겠습니까?")){
-      return false;
-    }else{
+   if(!confirm("저장히시겠습니까?")){
+     return false;
+   }else{
       
 
       const data = {
@@ -125,6 +127,96 @@ function App() {
   };
 
   // study form
+
+  // career form
+  const careerRef = fire.firestore().collection("career");
+const submitCareer = async (e) =>{
+   if(!uploadStatus){
+       alert('이미지 업로드 중입니다.');
+       return false;
+   }
+
+   if(!confirm("저장히시겠습니까?")){
+     return false;
+   }else{
+      
+
+      const data = {
+        college,
+        cLevel,
+        major,
+        comeInMonth,
+        comeInYear,
+        comeOutMonth,
+        comeOutYear,
+        score,
+        club,
+        explain,
+        id : uuidv4(),
+        dateTime : firebase.firestore.FieldValue.serverTimestamp(),
+        user : userCurrent.uid,
+        fileUrl : fileUrl
+      }
+
+      await careerRef
+      .doc(data.id)
+      .set(data)
+      .catch((err)=>{
+        console.log(err);
+      });
+
+      setCareer(!career);
+      alert('저장되었습니다.');
+    } 
+    
+
+  };
+  // career form
+
+    // Summary form
+    const summaryRef = fire.firestore().collection("summary");
+    const submitSummary = async (e) =>{
+       if(!uploadStatus){
+           alert('이미지 업로드 중입니다.');
+           return false;
+       }
+    
+       if(!confirm("저장히시겠습니까?")){
+         return false;
+       }else{
+          
+    
+          const data = {
+            college,
+            cLevel,
+            major,
+            comeInMonth,
+            comeInYear,
+            comeOutMonth,
+            comeOutYear,
+            score,
+            club,
+            explain,
+            id : uuidv4(),
+            dateTime : firebase.firestore.FieldValue.serverTimestamp(),
+            user : userCurrent.uid,
+            fileUrl : fileUrl
+          }
+    
+          await summaryRef
+          .doc(data.id)
+          .set(data)
+          .catch((err)=>{
+            console.log(err);
+          });
+    
+          setSummary(!summary);
+          alert('저장되었습니다.');
+        } 
+        
+    
+      };
+      // Summary form
   
 
   const clearInputs = () => {
@@ -299,6 +391,107 @@ function App() {
         <>
         </>
       )}
+      {career?(
+        <div className="studyPopup profile">
+          <div className="inner">
+            <ul>
+              <li className="study_header">
+                <p className="tt">경력 입력</p><p className="cb"><FontAwesomeIcon onClick={(e)=>setCareer(!career)} style={{cursor:"pointer"}} icon={faTimes} /></p>
+              </li>
+              <li className="study_form">
+                <div className="college">
+                  <label for="college">직장</label>
+                  <input type="text" id="college" onChange={(e)=>setCollege(e.target.value)} value={college} placeHolder="예: 삼성전자"/>
+                </div>
+                <div className="cLevel">
+                  <label for="cLevel">직급</label>
+                  <input type="text" id="cLevel" onChange={(e)=>setCLevel(e.target.value)} value={cLevel} placeHolder="예: 부장"/>
+                </div>
+                <div className="major">
+                  <label for="major">담당부서</label>
+                  <input type="text" id="major" onChange={(e)=>setMajor(e.target.value)} value={major} placeHolder="예: 개발팀"/>
+                </div>
+                <div className="comeIn">
+                  <label for="comeIn">입사일</label>
+                  <select onChange={(e)=>setComeInMonth(e.target.value)} value={comeInMonth}>
+                    <option value="">월</option>
+                    {month.map((idx)=>(
+                      <option value={idx}>{idx}월</option>
+                    ))}
+                  </select>
+                  <select onChange={(e)=>setComeInYear(e.target.value)} value={comeInYear}>
+                    <option value="">연도</option>
+                    {fullYear.map((idx)=>(
+                      <option value={idx}>{idx}년</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="comeOut">
+                  <label for="comeOut">퇴사일</label>
+                  <select onChange={(e)=>setComeOutMonth(e.target.value)} value={comeOutMonth}>
+                    <option value="">월</option>
+                    {month.map((idx)=>(
+                      <option value={idx}>{idx}월</option>
+                    ))}
+                  </select>
+                  <select onChange={(e)=>setComeOutYear(e.target.value)} value={comeOutYear}>
+                    <option value="">연도</option>
+                    {afterYear.map((idx)=>(
+                      <option value={idx}>{idx}년</option>
+                    ))}
+                  </select>
+                </div>
+                {/* <div className="score">
+                  <label for="score">학점</label>
+                  <input type="text" id="score" onChange={(e)=>setScore(e.target.value)} value={score} />
+                </div>
+                <div className="club">
+                  <label for="club">동아리나 학회</label>
+                  <textarea onChange={(e)=>setClub(e.target.value)} value={club} placeHolder="예: 산악 동아리, 정치 사회 연구회"></textarea>
+                </div> */}
+                <div className="explain">
+                  <label for="explain">설명</label>
+                  <textarea onChange={(e)=>setExplain(e.target.value)} value={explain} ></textarea>
+                </div>
+                <div className="studyImg">
+                  <label for="studyImg">대표이미지</label>
+                  <input type="file" onChange={onFileChange} id="studyImg" />
+                </div>
+              </li>
+              <li className="study_footer">
+                <p className="study_btn" onClick={(e)=>submitCareer()}>저장</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      ):(
+        <>
+        </>
+      )}
+
+      {summary?(
+        <div className="studyPopup profile">
+          <div className="inner">
+            <ul>
+              <li className="study_header">
+                <p className="tt">설명 입력</p><p className="cb"><FontAwesomeIcon onClick={(e)=>setSummary(!summary)} style={{cursor:"pointer"}} icon={faTimes} /></p>
+              </li>
+              <li className="study_form">
+                <div className="club">
+                  <label for="club">설명</label>
+                  <textarea onChange={(e)=>setClub(e.target.value)} value={club} placeHolder="etc.."></textarea>
+                </div>
+              </li>
+              <li className="study_footer">
+                <p className="study_btn" onClick={(e)=>submitSummary()}>저장</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      ):(
+        <>
+        </>
+      )}
       <div className="header">
         <ul>
           <li className="left"><h2><Link to='/'>BOARD</Link></h2></li>
@@ -429,6 +622,10 @@ function App() {
             userRef={userRef}
             study={study}
             setStudy={setStudy}
+            career={career}
+            setCareer={setCareer}
+            summary={summary}
+            setSummary={setSummary}
           />
         </Route>
       </Switch>

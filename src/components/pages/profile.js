@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { faEdit, faUniversity, faCamera, faPlus, faRedoAlt, faUserGraduate } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faUniversity, faCamera, faPlus, faRedoAlt, faUserGraduate, faPen } from "@fortawesome/free-solid-svg-icons";
 import firebase from '../fire';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Profile = (props) =>{
     const [update, setUpdate] = useState(true);
     const [studyList,setStudyList] = useState([]);
+    const [careerList, setCareerList] = useState([]);
+    const [summaryList, setSummaryList] = useState([]);
     
-    const {user, userCurrent, userRef, study, setStudy} = props;
+    const {user, userCurrent, userRef, study, setStudy, career, setCareer, summary, setSummary} = props;
 
     const studyRef = firebase.firestore().collection("study");
+    const careerRef = firebase.firestore().collection("career");
+    const summaryRef = firebase.firestore().collection("summary");
     
     
     const [loading, setLoading] = useState(false);
@@ -48,6 +52,24 @@ const Profile = (props) =>{
         studyRef.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc)=>doc.data());
             setStudyList(items);
+        });
+    }
+    function getCareer(){
+        careerRef.orderBy("dateTime","desc").get().then((item)=>{
+            const items = item.docs.map((doc)=>doc.data());
+            setCareerList(items);
+        });
+    }
+    const [summaryChk, setSummaryChk] = useState(0);
+    function getSummary(){
+        summaryRef.orderBy("dateTime","desc").get().then((item)=>{
+            const items = item.docs.map((doc)=>doc.data());
+            setSummaryList(items);
+            for(let i=0; i<items.length; i++){
+                if(items[i].user == userCurrent.uid){
+                    setSummaryChk(true);
+                }
+            }
         });
     }
 
@@ -101,7 +123,9 @@ const Profile = (props) =>{
     useEffect(()=>{
        getInfo(); 
        getStudy();
-    }, [study]);
+       getCareer();
+       getSummary();
+    }, [study, career]);
     
     if(loading){
         return <h1 className="loading">Loading...</h1>
@@ -158,18 +182,53 @@ const Profile = (props) =>{
                 <div className="infoBox">
                     <ul>
                         <li className="infoArea">
+                            <p className="career">설명</p>
+                            
+                            {summaryChk ? (
+                                <></>
+                            ) : (
+                                <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setSummary(!summary)} style={{cursor:"pointer"}} icon={faPlus} /></p>
+                            )}
+
+                            {summaryList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
+                                <div className="studyList">
+                                    <p class="summary">{list.club}</p>
+                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} /></p>
+                                </div>
+                            ))}
+                        </li>
+                    </ul>
+                </div>
+                <div className="infoBox">
+                    <ul>
+                        <li className="infoArea">
+                            <p className="career">경력</p>
+                            <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setCareer(!career)} style={{cursor:"pointer"}} icon={faPlus} /></p>
+                            {careerList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
+                                <div className="studyList">
+                                    <p className="graduate"><img src={list.fileUrl}/></p>
+                                    <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
+                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} /></p>
+                                </div>
+                            ))}
+                        </li>
+                    </ul>
+                </div>
+                <div className="infoBox">
+                    <ul>
+                        <li className="infoArea">
                             <p className="career">학력</p>
                             <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setStudy(!study)} style={{cursor:"pointer"}} icon={faPlus} /></p>
                             {studyList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
                                 <div className="studyList">
                                     <p className="graduate"><img src={list.fileUrl}/></p>
                                     <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
-                                    <p className="editArea">pen</p>
+                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} /></p>
                                 </div>
                             ))}
                         </li>
                     </ul>
-                </div>  
+                </div>
             </li>
         </>
     )
