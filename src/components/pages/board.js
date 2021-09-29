@@ -16,10 +16,11 @@ const Board = (props) => {
     const [desc, setDesc] = useState('');
     const [fileUrl, setFileUrl] = useState('');
     let file = "";
-    let uploadStatus=true;
+    const [uploadStatus, setUploadStatus]= useState(true);
 
     const onFileChange = async (e) => {
-        uploadStatus = false;
+        setUploadStatus(false);
+        console.log(uploadStatus);
         file = e.target.files[0];
         
         const storageRef = firebase.storage().ref();
@@ -34,12 +35,16 @@ const Board = (props) => {
                 setProgress(progress);
             },error=>{
                 console.log(error);
+            },
+            ()=>{
+                uploadTask.snapshot.ref.getDownloadURL().then(url=>{
+                    setFileUrl(url);
+                    setUploadStatus(true);
+                });
             }
-        )
-        setFileUrl(await fileRef.getDownloadURL());
-
-        uploadStatus = true;
-    }
+        );
+    };
+    
     let photoFile = document.getElementById('photoFile');
     const [writeShow, setWriteShow] = useState(false);
     const [modifyShow, setModifyShow] = useState(false);
