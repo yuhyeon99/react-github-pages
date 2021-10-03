@@ -9,8 +9,9 @@ const Profile = (props) =>{
     const [careerList, setCareerList] = useState([]);
     const [summaryList, setSummaryList] = useState([]);
     
-    const {user, userCurrent, userRef, study, setStudy, career, setCareer, summary, setSummary} = props;
+    const [club, setClub] = useState('');
 
+    const {user, userCurrent, userRef, study, setStudy, career, setCareer, summary, setSummary} = props;
     const studyRef = firebase.firestore().collection("study");
     const careerRef = firebase.firestore().collection("career");
     const summaryRef = firebase.firestore().collection("summary");
@@ -24,7 +25,7 @@ const Profile = (props) =>{
         introduce:"Introduce",
         job:"Job",
         location:"Location",
-        college:"College"
+        univercity:"univercity"
     });
     
     const [updateInfo, setUpdateInfo] = useState({
@@ -33,7 +34,7 @@ const Profile = (props) =>{
         introduce:"Introduce",
         job:"Job",
         location:"Location",
-        college:"College"
+        univercity:"univercity"
     });
     function getInfo(){
         setLoading(false);
@@ -73,7 +74,7 @@ const Profile = (props) =>{
         });
     }
 
-    const {name, massage, introduce, job, location, college} = updateInfo;
+    const {name, massage, introduce, job, location, univercity} = updateInfo;
     
 
     const onChange = e =>{
@@ -125,7 +126,17 @@ const Profile = (props) =>{
        getStudy();
        getCareer();
        getSummary();
-    }, [study, career]);
+    }, [study, career, summary]);
+
+    async function editSummary(id){
+        const docRef = summaryRef.doc(id);
+        await docRef.get().then((doc)=>{
+            const items = doc.data();
+            setClub(items.club);
+            console.log(club);
+        });
+        setSummary(true);
+    }
     
     if(loading){
         return <h1 className="loading">Loading...</h1>
@@ -155,7 +166,7 @@ const Profile = (props) =>{
                                 <>
                                     <p className="update"><button type="button" onClick={()=>setUpdate(!update)} style={{cursor:"pointer"}} > 수정 </button></p>
                                     <p className="name">{info.name}</p>
-                                    <p className="college"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faUniversity} /> {info.college}</p>
+                                    <p className="college"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faUniversity} /> {info.univercity}</p>
                                     <p className="job">{info.job}</p>
                                     <p className="location">{info.location}</p>
                                     <p className="introduce">{info.massage}</p>
@@ -167,8 +178,8 @@ const Profile = (props) =>{
                                     <p className="name">{info.name} <input type="text" name="name" placeHolder="Name" onChange={onChange}  value={name} /> </p>
                                     <p className="college">
                                         <FontAwesomeIcon style={{cursor:"pointer"}} icon={faUniversity} /> 
-                                         {info.college} 
-                                        <input type="text" onChange={onChange} name="college" placeHolder="College" value={college} /> 
+                                         {info.univercity} 
+                                        <input type="text" onChange={onChange} name="univercity" placeHolder="univercity" value={univercity} /> 
                                     </p>
                                     <p className="job">{info.job} <input type="text" name="job" onChange={onChange} placeHolder="Job" value={job} /></p>
                                     <p className="location">{info.location} <input type="text" name="location" onChange={onChange} placeHolder="Location" value={location} /></p>
@@ -193,7 +204,7 @@ const Profile = (props) =>{
                             {summaryList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
                                 <div className="studyList">
                                     <p class="summary">{list.club}</p>
-                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} /></p>
+                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} onClick={(e)=>editSummary(list.id)} /></p>
                                 </div>
                             ))}
                         </li>
