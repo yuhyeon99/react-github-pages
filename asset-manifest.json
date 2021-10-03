@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/react-github-pages/static/css/main.81f1e786.chunk.css",
-    "main.js": "/react-github-pages/static/js/main.9c727f80.chunk.js",
-    "main.js.map": "/react-github-pages/static/js/main.9c727f80.chunk.js.map",
+    "main.js": "/react-github-pages/static/js/main.d8ef2abb.chunk.js",
+    "main.js.map": "/react-github-pages/static/js/main.d8ef2abb.chunk.js.map",
     "runtime-main.js": "/react-github-pages/static/js/runtime-main.d6712c4d.js",
     "runtime-main.js.map": "/react-github-pages/static/js/runtime-main.d6712c4d.js.map",
-    "static/js/2.51e8926d.chunk.js": "/react-github-pages/static/js/2.51e8926d.chunk.js",
-    "static/js/2.51e8926d.chunk.js.map": "/react-github-pages/static/js/2.51e8926d.chunk.js.map",
+    "static/js/2.1bda9ee9.chunk.js": "/react-github-pages/static/js/2.1bda9ee9.chunk.js",
+    "static/js/2.1bda9ee9.chunk.js.map": "/react-github-pages/static/js/2.1bda9ee9.chunk.js.map",
     "static/js/3.0f1649c5.chunk.js": "/react-github-pages/static/js/3.0f1649c5.chunk.js",
     "static/js/3.0f1649c5.chunk.js.map": "/react-github-pages/static/js/3.0f1649c5.chunk.js.map",
     "index.html": "/react-github-pages/index.html",
     "static/css/main.81f1e786.chunk.css.map": "/react-github-pages/static/css/main.81f1e786.chunk.css.map",
-    "static/js/2.51e8926d.chunk.js.LICENSE.txt": "/react-github-pages/static/js/2.51e8926d.chunk.js.LICENSE.txt",
+    "static/js/2.1bda9ee9.chunk.js.LICENSE.txt": "/react-github-pages/static/js/2.1bda9ee9.chunk.js.LICENSE.txt",
     "static/media/App.css": "/react-github-pages/static/media/profileBg.82687b4e.png"
   },
   "entrypoints": [
     "static/js/runtime-main.d6712c4d.js",
-    "static/js/2.51e8926d.chunk.js",
+    "static/js/2.1bda9ee9.chunk.js",
     "static/css/main.81f1e786.chunk.css",
-    "static/js/main.9c727f80.chunk.js"
+    "static/js/main.d8ef2abb.chunk.js"
   ]
 }
