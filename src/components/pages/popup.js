@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Popup = (props) =>{
 
-  const {userCurrent, fire, firebase, study, setStudy, career, setCareer, summary, setSummary} = props;
+  const {userCurrent, fire, firebase, study, setStudy, career, setCareer, summary, setSummary, college, cLevel, major, comeInMonth, comeInYear, comeOutMonth, comeOutYear, score, club, explain, setCollege, setCLevel, setMajor, setComeInMonth, setComeInYear, setComeOutMonth, setComeOutYear, setScore, setClub, setExplain, editBtn, setEditBtn, editUid, setEditUid} = props;
   
   // study form
   const month = [];
@@ -23,18 +23,8 @@ const Popup = (props) =>{
   for(let i=year+10; i>=year-100; i--){
     afterYear.push(i);
   };
-  const [editUid, setEditUid] = useState('');
+  
 
-  const [college, setCollege] = useState('');
-  const [cLevel, setCLevel] = useState('');
-  const [major, setMajor] = useState('');
-  const [comeInMonth, setComeInMonth] = useState('');
-  const [comeInYear, setComeInYear] = useState('');
-  const [comeOutMonth, setComeOutMonth] = useState('');
-  const [comeOutYear, setComeOutYear] = useState('');
-  const [score, setScore] = useState('');
-  const [club, setClub] = useState('');
-  const [explain, setExplain] = useState('');
   let studyImg = document.getElementById('studyImg');
 
   const [fileUrl, setFileUrl] = useState('');
@@ -80,12 +70,22 @@ const submitStudy = async (e) =>{
         fileUrl : fileUrl
       }
 
-      await studyRef
-      .doc(data.id)
-      .set(data)
-      .catch((err)=>{
-        console.log(err);
-      });
+      if(editBtn){
+        data.id = editUid;
+        await studyRef
+        .doc(editUid)
+        .set(data)
+        .catch((err)=>{
+          console.log(err);
+        });
+      }else{
+        await studyRef
+        .doc(data.id)
+        .set(data)
+        .catch((err)=>{
+            console.log(err);
+        });
+      }
 
       setStudy(!study);
       setCollege('');
@@ -134,13 +134,23 @@ const submitCareer = async (e) =>{
         user : userCurrent.uid,
         fileUrl : fileUrl
       }
-
-      await careerRef
-      .doc(data.id)
-      .set(data)
-      .catch((err)=>{
-        console.log(err);
-      });
+    //   수정 여부
+      if(editBtn){
+        data.id = editUid;
+        await careerRef
+        .doc(editUid)
+        .update(data)
+        .catch((err)=>{
+            console.log(err);
+        });
+      }else{
+        await careerRef
+        .doc(data.id)
+        .set(data)
+        .catch((err)=>{
+            console.log(err);
+        });
+      }
 
       setCareer(!career);
       setCollege('');
@@ -190,13 +200,23 @@ const submitCareer = async (e) =>{
           user : userCurrent.uid,
           fileUrl : fileUrl
         }
-  
-        await summaryRef
-        .doc(data.id)
-        .set(data)
-        .catch((err)=>{
-          console.log(err);
-        });
+        // 수정 여부
+        if(editBtn){
+            data.id = editUid;
+            await summaryRef
+            .doc(editUid)
+            .update(data)
+            .catch((err)=>{
+            console.log(err);
+            });
+        }else{
+            await summaryRef
+            .doc(data.id)
+            .set(data)
+            .catch((err)=>{
+            console.log(err);
+            });
+        }
   
         setSummary(!summary);
         
@@ -233,7 +253,9 @@ const submitCareer = async (e) =>{
         setScore('');
         setClub('');
         setExplain('');
-
+        
+        setEditBtn(false);
+        setEditUid('');
     }
 
 

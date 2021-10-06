@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faEdit, faUniversity, faCamera, faPlus, faRedoAlt, faUserGraduate, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTimes, faUniversity, faCamera, faPlus, faRedoAlt, faUserGraduate, faPen } from "@fortawesome/free-solid-svg-icons";
 import firebase from '../fire';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,10 +8,8 @@ const Profile = (props) =>{
     const [studyList,setStudyList] = useState([]);
     const [careerList, setCareerList] = useState([]);
     const [summaryList, setSummaryList] = useState([]);
-    
-    const [club, setClub] = useState('');
 
-    const {user, userCurrent, userRef, study, setStudy, career, setCareer, summary, setSummary} = props;
+    const {user, userCurrent, userRef, study, setStudy, career, setCareer, summary, setSummary, college, cLevel, major, comeInMonth, comeInYear, comeOutMonth, comeOutYear, score, club, explain, setCollege, setCLevel, setMajor, setComeInMonth, setComeInYear, setComeOutMonth, setComeOutYear, setScore, setClub, setExplain, editBtn, setEditBtn, editUid, setEditUid} = props;
     const studyRef = firebase.firestore().collection("study");
     const careerRef = firebase.firestore().collection("career");
     const summaryRef = firebase.firestore().collection("summary");
@@ -130,12 +128,83 @@ const Profile = (props) =>{
 
     async function editSummary(id){
         const docRef = summaryRef.doc(id);
+        console.log(id);
+        return false;
         await docRef.get().then((doc)=>{
             const items = doc.data();
             setClub(items.club);
-            console.log(club);
         });
         setSummary(true);
+        setEditBtn(true);
+        setEditUid(id);
+    }
+
+    async function editStudy(id){
+        const docRef = studyRef.doc(id);
+        await docRef.get().then((doc)=>{
+            const items = doc.data();
+            setCollege(items.college);
+            setCLevel(items.cLevel);
+            setMajor(items.major);
+            setComeInMonth(items.comeInMonth);
+            setComeInYear(items.comeInYear);
+            setComeOutMonth(items.comeOutMonth);
+            setComeOutYear(items.comeOutYear);
+            setScore(items.score);
+            setClub(items.club);
+            setExplain(items.explain);
+        });
+        setStudy(true);
+        setEditBtn(true);
+        setEditUid(id);
+    }
+
+    async function editCareer(id){
+        const docRef = careerRef.doc(id);
+        await docRef.get().then((doc)=>{
+            const items = doc.data();
+            setCollege(items.college);
+            setCLevel(items.cLevel);
+            setMajor(items.major);
+            setComeInMonth(items.comeInMonth);
+            setComeInYear(items.comeInYear);
+            setComeOutMonth(items.comeOutMonth);
+            setComeOutYear(items.comeOutYear);
+            setScore(items.score);
+            setClub(items.club);
+            setExplain(items.explain);
+
+        });
+        setCareer(true);
+        setEditBtn(true);
+        setEditUid(id);
+    }
+
+    function deleteProfile(id){
+        alert("테스트 중입니다.");
+        return false;
+        if(study){
+            studyRef
+            .doc(id)
+            .delete()
+            .catch((err)=>{
+            console.error(err);
+            });
+        }else if(career){
+            careerRef
+            .doc(id)
+            .delete()
+            .catch((err)=>{
+            console.error(err);
+            });
+        }else if(summary){
+            summaryRef
+            .doc(id)
+            .delete()
+            .catch((err)=>{
+            console.error(err);
+            });
+        }
     }
     
     if(loading){
@@ -204,7 +273,10 @@ const Profile = (props) =>{
                             {summaryList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
                                 <div className="studyList">
                                     <p class="summary">{list.club}</p>
-                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} onClick={(e)=>editSummary(list.id)} /></p>
+                                    <p className="editArea">
+                                        <FontAwesomeIcon style={{cursor:"pointer", marginRight:"10px"}} icon={faPen} onClick={(e)=>editSummary(list.id)} />
+                                        <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={(e)=>deleteProfile(list.id)} />
+                                    </p>
                                 </div>
                             ))}
                         </li>
@@ -219,7 +291,7 @@ const Profile = (props) =>{
                                 <div className="studyList">
                                     <p className="graduate"><img src={list.fileUrl}/></p>
                                     <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
-                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} /></p>
+                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} onClick={(e)=>editCareer(list.id)} /></p>
                                 </div>
                             ))}
                         </li>
@@ -234,7 +306,7 @@ const Profile = (props) =>{
                                 <div className="studyList">
                                     <p className="graduate"><img src={list.fileUrl}/></p>
                                     <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
-                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} /></p>
+                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} onClick={(e)=>editStudy(list.id)} /></p>
                                 </div>
                             ))}
                         </li>

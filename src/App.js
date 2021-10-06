@@ -30,6 +30,20 @@ function App() {
   const [study, setStudy] = useState(false);
   const [career, setCareer] = useState(false);
   const [summary, setSummary] = useState(false);
+
+  const [college, setCollege] = useState('');
+  const [cLevel, setCLevel] = useState('');
+  const [major, setMajor] = useState('');
+  const [comeInMonth, setComeInMonth] = useState('');
+  const [comeInYear, setComeInYear] = useState('');
+  const [comeOutMonth, setComeOutMonth] = useState('');
+  const [comeOutYear, setComeOutYear] = useState('');
+  const [score, setScore] = useState('');
+  const [club, setClub] = useState('');
+  const [explain, setExplain] = useState('');
+  
+  const [editBtn, setEditBtn] = useState(false);
+  const [editUid, setEditUid] = useState('');
   
 
   // login
@@ -141,7 +155,41 @@ function App() {
     <BrowserRouter>
     <div>
 
-      <Popup userCurrent={userCurrent} fire={fire} firebase={firebase} study={study} setStudy={setStudy} career={career} setCareer={setCareer} summary={summary} setSummary={setSummary} />
+      <Popup 
+        userCurrent={userCurrent} 
+        fire={fire} 
+        firebase={firebase} 
+        study={study} 
+        setStudy={setStudy} 
+        career={career} 
+        setCareer={setCareer} 
+        summary={summary} 
+        setSummary={setSummary} 
+        college={college}
+        cLevel={cLevel}
+        major={major}
+        comeInMonth={comeInMonth}
+        comeInYear={comeInYear}
+        comeOutMonth={comeOutMonth}
+        comeOutYear={comeOutYear}
+        score={score}
+        club={club}
+        explain={explain}
+        setCollege={setCollege}
+        setCLevel={setCLevel}
+        setMajor={setMajor}
+        setComeInMonth={setComeInMonth}
+        setComeInYear={setComeInYear}
+        setComeOutMonth={setComeOutMonth}
+        setComeOutYear={setComeOutYear}
+        setScore={setScore}
+        setClub={setClub}
+        setExplain={setExplain}
+        editBtn={editBtn}
+        setEditBtn={setEditBtn}
+        editUid={editUid}
+        setEditUid={setEditUid}
+      />
       <div className="header">
         <ul>
           <li className="left"><h2><Link to='/'>BOARD</Link></h2></li>
@@ -222,6 +270,30 @@ function App() {
             setCareer={setCareer}
             summary={summary}
             setSummary={setSummary}
+            college={college}
+            cLevel={cLevel}
+            major={major}
+            comeInMonth={comeInMonth}
+            comeInYear={comeInYear}
+            comeOutMonth={comeOutMonth}
+            comeOutYear={comeOutYear}
+            score={score}
+            club={club}
+            explain={explain}
+            setCollege={setCollege}
+            setCLevel={setCLevel}
+            setMajor={setMajor}
+            setComeInMonth={setComeInMonth}
+            setComeInYear={setComeInYear}
+            setComeOutMonth={setComeOutMonth}
+            setComeOutYear={setComeOutYear}
+            setScore={setScore}
+            setClub={setClub}
+            setExplain={setExplain}
+            editBtn={editBtn}
+            setEditBtn={setEditBtn}
+            editUid={editUid}
+            setEditUid={setEditUid}
           />
         </Route>
       </Switch>
