@@ -12,6 +12,8 @@ import Board from "./components/pages/board.js";
 import Login from './components/Login';
 import Profile from './components/pages/profile';
 import Popup from './components/pages/popup.js';
+import Chat from './components/chat/chat.js';
+import ChatJoin from './components/chat/join.js';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import jQuery from "jquery";
@@ -296,6 +298,7 @@ function App() {
             setEditUid={setEditUid}
           />
         </Route>
+        <Route path='/chat/join' component={ChatJoin} />
       </Switch>
             </ul>
           </div>

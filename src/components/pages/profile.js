@@ -128,8 +128,6 @@ const Profile = (props) =>{
 
     async function editSummary(id){
         const docRef = summaryRef.doc(id);
-        console.log(id);
-        return false;
         await docRef.get().then((doc)=>{
             const items = doc.data();
             setClub(items.club);
@@ -180,32 +178,47 @@ const Profile = (props) =>{
         setEditUid(id);
     }
 
-    function deleteProfile(id){
-        alert("테스트 중입니다.");
-        return false;
-        if(study){
-            studyRef
-            .doc(id)
-            .delete()
-            .catch((err)=>{
-            console.error(err);
-            });
-        }else if(career){
-            careerRef
-            .doc(id)
-            .delete()
-            .catch((err)=>{
-            console.error(err);
-            });
-        }else if(summary){
-            summaryRef
-            .doc(id)
-            .delete()
-            .catch((err)=>{
-            console.error(err);
-            });
+    const deleteProfile = (e) =>{        
+        const type = e.currentTarget.dataset.type;
+        const uid = e.currentTarget.dataset.uid;
+
+        if(!window.confirm("삭제히시겠습니까?")){
+            return false;
         }
-    }
+        switch(type){
+            case "summary":
+                    summaryRef
+                        .doc(uid)
+                        .delete()
+                        .catch((err)=>{
+                            console.log(err);
+                        });
+
+                    getSummary();
+                break;
+            case "career":
+                    careerRef
+                        .doc(uid)
+                        .delete()
+                        .catch((err)=>{
+                            console.log(err);
+                        });
+                        
+                    getCareer();   
+                break;
+            case "study":
+                studyRef
+                    .doc(uid)
+                    .delete()
+                    .catch((err)=>{
+                        console.log(err);
+                    });
+                    
+                getStudy();
+                break;
+        }
+        alert("삭제되었습니다.");
+    };
     
     if(loading){
         return <h1 className="loading">Loading...</h1>
@@ -275,7 +288,7 @@ const Profile = (props) =>{
                                     <p class="summary">{list.club}</p>
                                     <p className="editArea">
                                         <FontAwesomeIcon style={{cursor:"pointer", marginRight:"10px"}} icon={faPen} onClick={(e)=>editSummary(list.id)} />
-                                        <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={(e)=>deleteProfile(list.id)} />
+                                        <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={deleteProfile} data-type="summary" data-uid={list.id} />
                                     </p>
                                 </div>
                             ))}
@@ -290,8 +303,16 @@ const Profile = (props) =>{
                             {careerList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
                                 <div className="studyList">
                                     <p className="graduate"><img src={list.fileUrl}/></p>
-                                    <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
-                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} onClick={(e)=>editCareer(list.id)} /></p>
+                                    <p class="gInfo">
+                                        <span>{list.college}</span><br/>
+                                        <span>{list.cLevel}, {list.major}</span><br/>
+                                        <span>{list.comeInYear}년-{list.comeOutYear}년</span> <br /> <br />
+                                        <span>{list.explain}</span>
+                                    </p>
+                                    <p className="editArea">
+                                        <FontAwesomeIcon style={{cursor:"pointer", marginRight:"10px"}} icon={faPen} onClick={(e)=>editCareer(list.id)} />
+                                        <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={deleteProfile} data-type="career" data-uid={list.id} />
+                                    </p>
                                 </div>
                             ))}
                         </li>
@@ -306,7 +327,10 @@ const Profile = (props) =>{
                                 <div className="studyList">
                                     <p className="graduate"><img src={list.fileUrl}/></p>
                                     <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
-                                    <p className="editArea"><FontAwesomeIcon style={{cursor:"pointer"}} icon={faPen} onClick={(e)=>editStudy(list.id)} /></p>
+                                    <p className="editArea">
+                                        <FontAwesomeIcon style={{cursor:"pointer", marginRight:"10px"}} icon={faPen} onClick={(e)=>editStudy(list.id)} />
+                                        <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={deleteProfile} data-type="study" data-uid={list.id} />
+                                    </p>
                                 </div>
                             ))}
                         </li>
