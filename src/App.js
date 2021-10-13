@@ -200,6 +200,7 @@ function App() {
             <div><Link to='/menu2'>MENU2</Link></div>
             <div><Link to='/menu3'>MENU3</Link></div>
             <div><Link to='/board'>MEMBERS</Link></div>
+            <div><Link to='/join/join'>CHATTING</Link></div>
           </li>
           
           <li className="right">
@@ -298,7 +299,8 @@ function App() {
             setEditUid={setEditUid}
           />
         </Route>
-        <Route path='/chat/join' component={ChatJoin} />
+        <Route path='/chat' component={Chat} />
+        <Route path='/join/join' component={ChatJoin} /> 
       </Switch>
             </ul>
           </div>
