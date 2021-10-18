@@ -60,7 +60,6 @@ function App() {
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(true);
   const [loading, setLoading] = useState(false);
-  
 
   const clearInputs = () => {
     setEmail('');

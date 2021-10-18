@@ -64,10 +64,16 @@ const Profile = (props) =>{
         summaryRef.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc)=>doc.data());
             setSummaryList(items);
+            let chk;
             for(let i=0; i<items.length; i++){
                 if(items[i].user == userCurrent.uid){
-                    setSummaryChk(true);
+                    chk = true;
                 }
+            }
+            if(chk){
+                setSummaryChk(true);
+            }else{
+                setSummaryChk(false);
             }
         });
     }
@@ -178,7 +184,7 @@ const Profile = (props) =>{
         setEditUid(id);
     }
 
-    const deleteProfile = (e) =>{        
+    const deleteProfile = async(e) =>{        
         const type = e.currentTarget.dataset.type;
         const uid = e.currentTarget.dataset.uid;
 
@@ -187,7 +193,7 @@ const Profile = (props) =>{
         }
         switch(type){
             case "summary":
-                    summaryRef
+                    await summaryRef
                         .doc(uid)
                         .delete()
                         .catch((err)=>{
@@ -197,7 +203,7 @@ const Profile = (props) =>{
                     getSummary();
                 break;
             case "career":
-                    careerRef
+                await careerRef
                         .doc(uid)
                         .delete()
                         .catch((err)=>{
@@ -207,7 +213,7 @@ const Profile = (props) =>{
                     getCareer();   
                 break;
             case "study":
-                studyRef
+                await studyRef
                     .doc(uid)
                     .delete()
                     .catch((err)=>{
