@@ -5,7 +5,7 @@ const http = require('http')
 const cors = require('cors')
 const router = require('./router')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js')
-
+// process.env.PORT || 5000 => process.env 라는 객체에 port라는 설정이 있다면 그 속성을 사용하고, 없다면 5000을 사용한다는 뜻!
 const PORT = process.env.PORT || 5000
 
 const app = express()
