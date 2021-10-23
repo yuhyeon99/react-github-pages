@@ -188,7 +188,7 @@ const Profile = (props) =>{
         const type = e.currentTarget.dataset.type;
         const uid = e.currentTarget.dataset.uid;
 
-        if(!window.confirm("삭제히시겠습니까?")){
+        if(!window.confirm("삭제하시겠습니까?")){
             return false;
         }
         switch(type){
