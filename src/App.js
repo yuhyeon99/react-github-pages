@@ -14,6 +14,7 @@ import Profile from './components/pages/profile';
 import Popup from './components/pages/popup.js';
 import Chat from './components/chat/chat.js';
 import ChatJoin from './components/chat/join.js';
+import FirebaseLogin from './components/firebaseChat/FirebaseLogin';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import jQuery from "jquery";
@@ -300,6 +301,7 @@ function App() {
         </Route>
         <Route path='/chat' component={Chat} />
         <Route path='/join/join' component={ChatJoin} /> 
+        <Route path="/firebasechat" component={FirebaseLogin} />
       </Switch>
             </ul>
           </div>
