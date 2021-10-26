@@ -15,6 +15,8 @@ import Popup from './components/pages/popup.js';
 import Chat from './components/chat/chat.js';
 import ChatJoin from './components/chat/join.js';
 import FirebaseLogin from './components/firebaseChat/FirebaseLogin';
+import { AuthProvider } from './components/firebaseChat/AuthContext';
+import FirebaseChat from './components/firebaseChat/FirebaseChat';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import jQuery from "jquery";
@@ -155,6 +157,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <AuthProvider>
     <div>
 
       <Popup 
@@ -200,7 +203,7 @@ function App() {
             <div><Link to='/menu2'>MENU2</Link></div>
             <div><Link to='/menu3'>MENU3</Link></div>
             <div><Link to='/board'>MEMBERS</Link></div>
-            <div><Link to='/join/join'>CHATTING</Link></div>
+            <div><Link to='/firebasechat'>CHATTING</Link></div>
           </li>
           
           <li className="right">
@@ -301,8 +304,11 @@ function App() {
         </Route>
         <Route path='/chat' component={Chat} />
         <Route path='/join/join' component={ChatJoin} /> 
-        <Route path="/firebasechat" component={FirebaseLogin} />
+
+        <Route path="/firebasechat/chats" component={FirebaseChat} />
+        <Route exact path="/firebasechat" component={FirebaseLogin} />
       </Switch>
+      
             </ul>
           </div>
         </div>
@@ -311,6 +317,7 @@ function App() {
 
 
     </div>
+    </AuthProvider>
     </BrowserRouter>
     
   );
