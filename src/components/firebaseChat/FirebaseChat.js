@@ -32,7 +32,7 @@ const FirebaseChat = () => {
             return;
         }
 
-        axios.get('https://api.catengine.io/users/me',{
+        axios.get('https://api.chatengine.io/users/me',{
             headers: {
                 "project-id": "848674b8-7126-4a14-a242-9a117b6d9de5",
                 "user-name": user.email,
@@ -74,7 +74,7 @@ const FirebaseChat = () => {
                 </div>
 
                 <ChatEngine
-                    height="calc(100vh - 66px)"
+                    height="calc(90vh - 66px)"
                     projectID="848674b8-7126-4a14-a242-9a117b6d9de5"
                     userName={user.email}
                     userSecret={user.uid}
