@@ -32,11 +32,7 @@ const FirebaseChat = () => {
             return;
         }
 
-<<<<<<< HEAD
         axios.get('https://api.chatengine.io/users/me',{
-=======
-        axios.get('https://api.chatengine.io/users/me', {
->>>>>>> 6960dcd3efab6d6e07c1ad9e7ba05437063eb264
             headers: {
                 "project-id": "848674b8-7126-4a14-a242-9a117b6d9de5",
                 "user-name": user.email,
