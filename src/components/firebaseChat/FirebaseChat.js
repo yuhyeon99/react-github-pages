@@ -5,7 +5,7 @@ import firebase from '../fire';
 
 import { useAuth } from './AuthContext';
 import axios from 'axios';
-
+// test commit - yuhyeon
 const FirebaseChat = () => {
 
     const history = useHistory();
@@ -32,7 +32,11 @@ const FirebaseChat = () => {
             return;
         }
 
+<<<<<<< HEAD
         axios.get('https://api.chatengine.io/users/me',{
+=======
+        axios.get('https://api.chatengine.io/users/me', {
+>>>>>>> 6960dcd3efab6d6e07c1ad9e7ba05437063eb264
             headers: {
                 "project-id": "848674b8-7126-4a14-a242-9a117b6d9de5",
                 "user-name": user.email,
@@ -45,14 +49,14 @@ const FirebaseChat = () => {
         .catch(()=>{
             let formdata = new FormData();
             formdata.append('email',user.email);
-            formdata.append('username', user.displayName);
+            formdata.append('username', user.email);
             formdata.append('secret', user.uid);
 
-            getFile(user.photoUrl)
+            getFile(user.photoURL)
                 .then((avatar)=>{
                     formdata.append('avatar', avatar, avatar.name);
 
-                    axios.post('https://api.chatengine.io/users',
+                    axios.post('https://api.chatengine.io/users/',
                         formdata,
                         { headers: { "private-key": "dabcd877-72a8-47e0-8451-40d9e85ad193" } }
                     )
