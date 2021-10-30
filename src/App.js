@@ -225,7 +225,7 @@ function App() {
       <div className="commonBox middle">
             <div>
               <div>
-                <ul>
+                <ul style={{position:'relative'}}>
                   <li className="left">
                     <div><Link to='/'>MENU1</Link></div>
                     <div><Link to='/menu2'>MENU2</Link></div>
