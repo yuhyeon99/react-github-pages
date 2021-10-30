@@ -164,7 +164,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <AuthProvider>
+    
     <div>
 
       <Popup 
@@ -311,9 +311,10 @@ function App() {
         </Route>
         <Route path='/chat' component={Chat} />
         <Route path='/join/join' component={ChatJoin} /> 
-
+        <AuthProvider>
         <Route path="/firebasechat/chats" component={FirebaseChat} />
         <Route exact path="/firebasechat" component={FirebaseLogin} />
+        </AuthProvider>
       </Switch>
       
             </ul>
@@ -324,7 +325,7 @@ function App() {
 
 
     </div>
-    </AuthProvider>
+    
     </BrowserRouter>
     
   );
