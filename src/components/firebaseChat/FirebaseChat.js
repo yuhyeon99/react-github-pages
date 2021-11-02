@@ -10,6 +10,7 @@ const FirebaseChat = () => {
 
     const history = useHistory();
     const { user } = useAuth();
+    
     const [loading, setLoading] = useState(true);
 
     const handleLogout = async() => {

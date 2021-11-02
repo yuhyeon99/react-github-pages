@@ -155,6 +155,7 @@ function App() {
 
   useEffect(()=>{
     authListener();
+    
   }, []);
 
   // login
@@ -164,7 +165,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <AuthProvider>
+    
     <div>
 
       <Popup 
@@ -311,9 +312,10 @@ function App() {
         </Route>
         <Route path='/chat' component={Chat} />
         <Route path='/join/join' component={ChatJoin} /> 
-
-        <Route path="/firebasechat/chats" component={FirebaseChat} />
+        <AuthProvider>
+        <Route path="/firebasechat/chats" component={FirebaseChat} userCurrent={userCurrent} />
         <Route exact path="/firebasechat" component={FirebaseLogin} />
+        </AuthProvider>
       </Switch>
       
             </ul>
@@ -324,7 +326,7 @@ function App() {
 
 
     </div>
-    </AuthProvider>
+    
     </BrowserRouter>
     
   );
