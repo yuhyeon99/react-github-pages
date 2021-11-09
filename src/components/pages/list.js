@@ -47,7 +47,16 @@ const View =  () =>{
                         <p>{viewList.desc} </p>
                     </li>
                     <li className="lm viewLm">
-                        <img src={viewList.fileUrl} alt={viewList.title} />
+                        {viewList.fileUrl ? (
+                            viewList.fileType == "video/mp4" 
+                            ?
+                            <video style={{width:"100%"}} src={viewList.fileUrl} alt={viewList.title} controls autoplay></video>
+                            :
+                            <img src={viewList.fileUrl} alt={viewList.title} />
+                        ) : (
+                            <>
+                            </>
+                        )}
                     </li>
                     <li className="lb">
                         <Link to='/board'>

@@ -17,12 +17,13 @@ const Board = (props) => {
     const [fileUrl, setFileUrl] = useState('');
     let file = "";
     const [uploadStatus, setUploadStatus]= useState(true);
+    const [fileType, setFileType] = useState('');
 
     const onFileChange = async (e) => {
         setUploadStatus(false);
         console.log(uploadStatus);
         file = e.target.files[0];
-        
+        setFileType(file.type);
         const storageRef = firebase.storage().ref();
         const fileRef = storageRef.child(file.name);
         const uploadTask = fileRef.put(file);
@@ -180,7 +181,7 @@ const Board = (props) => {
                         <progress value={progress} max="100" /> <br />
                         <input type="file" id="photoFile" onChange={onFileChange} />
                         </li>
-                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
+                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, fileType:fileType, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
                     </ul>
                     </div>
                 </li>
@@ -203,7 +204,7 @@ const Board = (props) => {
                         <progress value={progress} max="100" /> <br />
                         <input type="file" onChange={onFileChange} />
                         </li>
-                        <li className="submitBtn"><button onClick={()=> editBoard({ title :modifyTitle, desc : modifyDesc, fileUrl, id: modifyId })}>수정 </button></li>
+                        <li className="submitBtn"><button onClick={()=> editBoard({ title :modifyTitle, desc : modifyDesc, fileType:fileType, fileUrl, id: modifyId })}>수정 </button></li>
                     </ul>
                     </div>
                 </li>
@@ -251,7 +252,11 @@ const Board = (props) => {
                             <p>{list.desc} </p>
                         </li>
                         <li className="lm">
-                            {list.fileUrl? (
+                            {list.fileUrl ? (
+                                list.fileType == "video/mp4" 
+                                ?
+                                <video style={{width:"100%"}} src={list.fileUrl} alt={list.title} controls autoplay></video>
+                                :
                                 <img src={list.fileUrl} alt={list.title} />
                             ) : (
                                 <>
