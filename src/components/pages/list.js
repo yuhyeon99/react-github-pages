@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import firebase from '../fire';
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useScrollMove from "./useScrollMove";
 
 const View =  () =>{
     const [viewList, setViewList] = useState({
@@ -18,6 +19,22 @@ const View =  () =>{
     useEffect(()=>{
         loadData();
     },[]);
+
+    const { scrollInfos, scrollRemove } = useScrollMove({
+        page: `view_${id}`,
+        path: `/view/${id}`
+      });
+      
+    useEffect(() => {
+        if (scrollInfos ) {
+          window.scrollTo(0, scrollInfos);
+          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+          
+          scrollRemove();
+        }
+      }, [scrollInfos, scrollRemove]);
+
+
 
     const loadData = async (e) =>{
         setLoading(true);

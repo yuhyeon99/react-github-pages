@@ -1,13 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../fire';
+import {useHistory} from 'react-router';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useScrollMove from "./useScrollMove";
 
 const Board = (props) => {
     
     const {userCurrent} = props;
+    const history = useHistory();
+
+    const {scrollInfos, scrollRemove} = useScrollMove({
+        page : `view_`,
+        page : `/view/`
+    });
+
 
     const [loading, setLoading] = useState(false);
     
@@ -60,6 +69,10 @@ const Board = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const ref = firebase.firestore().collection("crudtest");
+
+    const onClick = id =>{
+        history.push(`/view/${id}`);
+    }
 
 
     function getLists(){
@@ -158,6 +171,16 @@ const Board = (props) => {
         getLists();
     }, []);
 
+    useEffect(() => {
+        if (scrollInfos ) {
+          window.scrollTo(0, scrollInfos);
+          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+          scrollRemove();
+          console.log(scrollInfos);
+        }
+      }, [scrollInfos, scrollRemove]);
+    
+
 
     if(loading){
         return <h1 className="loading">Loading...</h1>
@@ -240,18 +263,18 @@ const Board = (props) => {
                             return val;
                         }
                     }
-                }).map((list) => (
+                }).map((list,index) => (
                 
                     <div className="list_01 lists" key={list.id}>
                     <ul>
-                        <Link to={`/view/${list.id}`}>
-                        <li className="lt">
+                        {/* <Link to={`/view/${list.id}`}> */}
+                        <li className="lt"  onClick={()=> onClick(list.id)}>
                             <p>{list.title}</p>
                         </li>
-                        <li className="lc">
+                        <li className="lc"  onClick={()=> onClick(list.id)}>
                             <p>{list.desc} </p>
                         </li>
-                        <li className="lm">
+                        <li className="lm"  onClick={()=> onClick(list.id)}>
                             {list.fileUrl ? (
                                 list.fileType == "video/mp4" 
                                 ?
@@ -263,7 +286,7 @@ const Board = (props) => {
                                 </>
                             )}
                         </li>
-                        </Link>
+                        {/* </Link> */}
                         <li className="lb">
                             <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => deleteBoard(list) }>삭제</button>
                             <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => modifyBoard(list) }>수정</button>

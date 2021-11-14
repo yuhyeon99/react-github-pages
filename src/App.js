@@ -12,8 +12,6 @@ import Board from "./components/pages/board.js";
 import Login from './components/Login';
 import Profile from './components/pages/profile';
 import Popup from './components/pages/popup.js';
-import Chat from './components/chat/chat.js';
-import ChatJoin from './components/chat/join.js';
 import FirebaseLogin from './components/firebaseChat/FirebaseLogin';
 import { AuthProvider } from './components/firebaseChat/AuthContext';
 import FirebaseChat from './components/firebaseChat/FirebaseChat';
@@ -21,7 +19,7 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter , Route, Switch, Link} from 'react-router-dom';
 import { faTimes,faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -309,8 +307,6 @@ function App() {
             setEditUid={setEditUid}
           />
         </Route>
-        <Route path='/chat' component={Chat} />
-        <Route path='/join/join' component={ChatJoin} /> 
         <AuthProvider>
         <Route path="/firebasechat/chats" component={FirebaseChat} />
         <Route exact path="/firebasechat" component={FirebaseLogin} />
