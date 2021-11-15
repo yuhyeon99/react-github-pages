@@ -204,11 +204,51 @@ function App() {
         <ul>
           <li className="left"><h2><Link to='/'>BOARD</Link></h2></li>
           <li className="center">
-            <div><Link to='/'>MENU1</Link></div>
-            <div><Link to='/menu2'>MENU2</Link></div>
-            <div><Link to='/menu3'>MENU3</Link></div>
-            <div><Link to='/board'>MEMBERS</Link></div>
-            <div><Link to='/firebasechat'>CHATTING</Link></div>
+            <div>
+              <Link to='/'>MENU1</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
+            <div>
+              <Link to='/menu2'>MENU2</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
+            <div>
+              <Link to='/menu3'>MENU3</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>  
+            </div>
+            <div>
+              <Link to='/board'>MEMBERS</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
+            <div>
+              <Link to='/firebasechat'>CHATTING</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
           </li>
           
           <li className="right">
@@ -224,12 +264,12 @@ function App() {
             <div>
               <div>
                 <ul style={{position:'relative'}}>
-                  <li className="left">
+                  {/* <li className="left">
                     <div><Link to='/'>MENU1</Link></div>
                     <div><Link to='/menu2'>MENU2</Link></div>
                     <div><Link to='/menu3'>MENU3</Link></div>
                     <div><Link to='/'>MENU4</Link></div>
-                  </li>
+                  </li> */}
       <Switch>
         <Route exact path='/' component={Home}>
             
