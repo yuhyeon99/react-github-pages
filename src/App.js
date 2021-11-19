@@ -256,6 +256,26 @@ function App() {
               {/* {user?(      
                 <Member user={user} userCurrent={userCurrent} handleLogout={handleLogout}/>
             ):(<></>)} */}
+              <Switch>
+                <Route path='/board'>
+                  {user?(
+                    <>
+                    
+                    </>
+                  ) : (
+                    <>
+                    SNS 로그인 &nbsp; | 
+                    <img 
+                    onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/premium-icon-google-2504739.png" alt="" />
+                    <img
+                    onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.FacebookAuthProvider())}
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/free-icon-facebook-2111398.png" alt="" />
+                    
+                    </>
+                  )}
+                </Route>
+              </Switch>
             </div>
           </li>
         </ul>
