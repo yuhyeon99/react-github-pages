@@ -265,6 +265,7 @@ function App() {
                   ) : (
                     <>
                     SNS 로그인 &nbsp; | 
+                    <a href="javascript:KakaoLogin();"><img style={{height:'40px', width:'auto', verticalAlign:'middle'}} src="img/kakao.png" alt="" /></a>
                     <img 
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
                     style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/premium-icon-google-2504739.png" alt="" />
