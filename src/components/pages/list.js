@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import firebase from '../fire';
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useScrollMove from "./useScrollMove";
 
 const View =  () =>{
     const [viewList, setViewList] = useState({
@@ -18,6 +19,22 @@ const View =  () =>{
     useEffect(()=>{
         loadData();
     },[]);
+
+    const { scrollInfos, scrollRemove } = useScrollMove({
+        page: `view_${id}`,
+        path: `/view/${id}`
+      });
+      
+    useEffect(() => {
+        if (scrollInfos ) {
+          window.scrollTo(0, scrollInfos);
+          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+          
+          scrollRemove();
+        }
+      }, [scrollInfos, scrollRemove]);
+
+
 
     const loadData = async (e) =>{
         setLoading(true);
@@ -47,7 +64,16 @@ const View =  () =>{
                         <p>{viewList.desc} </p>
                     </li>
                     <li className="lm viewLm">
-                        <img src={viewList.fileUrl} alt={viewList.title} />
+                        {viewList.fileUrl ? (
+                            viewList.fileType == "video/mp4" 
+                            ?
+                            <video style={{width:"100%"}} src={viewList.fileUrl} alt={viewList.title} controls autoplay></video>
+                            :
+                            <img src={viewList.fileUrl} alt={viewList.title} />
+                        ) : (
+                            <>
+                            </>
+                        )}
                     </li>
                     <li className="lb">
                         <Link to='/board'>

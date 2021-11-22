@@ -1,13 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../fire';
+import {useHistory} from 'react-router';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useScrollMove from "./useScrollMove";
 
 const Board = (props) => {
     
     const {userCurrent} = props;
+    const history = useHistory();
+
+    const {scrollInfos, scrollRemove} = useScrollMove({
+        page : `view_`,
+        page : `/view/`
+    });
+
 
     const [loading, setLoading] = useState(false);
     
@@ -17,12 +26,13 @@ const Board = (props) => {
     const [fileUrl, setFileUrl] = useState('');
     let file = "";
     const [uploadStatus, setUploadStatus]= useState(true);
+    const [fileType, setFileType] = useState('');
 
     const onFileChange = async (e) => {
         setUploadStatus(false);
         console.log(uploadStatus);
         file = e.target.files[0];
-        
+        setFileType(file.type);
         const storageRef = firebase.storage().ref();
         const fileRef = storageRef.child(file.name);
         const uploadTask = fileRef.put(file);
@@ -59,6 +69,10 @@ const Board = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const ref = firebase.firestore().collection("crudtest");
+
+    const onClick = id =>{
+        history.push(`/view/${id}`);
+    }
 
 
     function getLists(){
@@ -157,6 +171,16 @@ const Board = (props) => {
         getLists();
     }, []);
 
+    useEffect(() => {
+        if (scrollInfos ) {
+          window.scrollTo(0, scrollInfos);
+          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+          scrollRemove();
+          console.log(scrollInfos);
+        }
+      }, [scrollInfos, scrollRemove]);
+    
+
 
     if(loading){
         return <h1 className="loading">Loading...</h1>
@@ -180,7 +204,7 @@ const Board = (props) => {
                         <progress value={progress} max="100" /> <br />
                         <input type="file" id="photoFile" onChange={onFileChange} />
                         </li>
-                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
+                        <li className="submitBtn"><button onClick={()=> addBoard({ title, desc, fileUrl, email:userCurrent.email, fileType:fileType, dateTime : firebase.firestore.FieldValue.serverTimestamp() , id: uuidv4() })}>게시</button></li>
                     </ul>
                     </div>
                 </li>
@@ -203,7 +227,7 @@ const Board = (props) => {
                         <progress value={progress} max="100" /> <br />
                         <input type="file" onChange={onFileChange} />
                         </li>
-                        <li className="submitBtn"><button onClick={()=> editBoard({ title :modifyTitle, desc : modifyDesc, fileUrl, id: modifyId })}>수정 </button></li>
+                        <li className="submitBtn"><button onClick={()=> editBoard({ title :modifyTitle, desc : modifyDesc, fileType:fileType, fileUrl, id: modifyId })}>수정 </button></li>
                     </ul>
                     </div>
                 </li>
@@ -239,26 +263,30 @@ const Board = (props) => {
                             return val;
                         }
                     }
-                }).map((list) => (
+                }).map((list,index) => (
                 
                     <div className="list_01 lists" key={list.id}>
                     <ul>
-                        <Link to={`/view/${list.id}`}>
-                        <li className="lt">
+                        {/* <Link to={`/view/${list.id}`}> */}
+                        <li className="lt"  onClick={()=> onClick(list.id)}>
                             <p>{list.title}</p>
                         </li>
-                        <li className="lc">
+                        <li className="lc"  onClick={()=> onClick(list.id)}>
                             <p>{list.desc} </p>
                         </li>
-                        <li className="lm">
-                            {list.fileUrl? (
+                        <li className="lm"  onClick={()=> onClick(list.id)}>
+                            {list.fileUrl ? (
+                                list.fileType == "video/mp4" 
+                                ?
+                                <video style={{width:"100%"}} src={list.fileUrl} alt={list.title} controls autoplay></video>
+                                :
                                 <img src={list.fileUrl} alt={list.title} />
                             ) : (
                                 <>
                                 </>
                             )}
                         </li>
-                        </Link>
+                        {/* </Link> */}
                         <li className="lb">
                             <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => deleteBoard(list) }>삭제</button>
                             <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => modifyBoard(list) }>수정</button>

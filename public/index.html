@@ -39,5 +39,28 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      window.Kakao.init("de0a9adf6c2314ec65debddd28116b56");
+
+      function KakaoLogin() {
+        window.Kakao.Auth.login({
+          scope:'profile_nickname, 	profile_image, account_email, gender',
+          success : function (authObj){
+            console.log(authObj);
+            window.Kakao.API.request({
+              url:'/v2/user/me',
+              success : res=>{
+                const kakao_account = res.kakao_account;
+                console.log(kakao_account);
+              }
+            });
+          },
+          fail: function (err){
+            console.log(err);
+          }
+        })
+      }
+    </script>
   </body>
 </html>

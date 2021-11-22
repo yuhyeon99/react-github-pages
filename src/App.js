@@ -12,8 +12,6 @@ import Board from "./components/pages/board.js";
 import Login from './components/Login';
 import Profile from './components/pages/profile';
 import Popup from './components/pages/popup.js';
-import Chat from './components/chat/chat.js';
-import ChatJoin from './components/chat/join.js';
 import FirebaseLogin from './components/firebaseChat/FirebaseLogin';
 import { AuthProvider } from './components/firebaseChat/AuthContext';
 import FirebaseChat from './components/firebaseChat/FirebaseChat';
@@ -21,7 +19,7 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter , Route, Switch, Link} from 'react-router-dom';
 import { faTimes,faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -207,11 +205,51 @@ function App() {
         <ul>
           <li className="left"><h2><Link to='/'>BOARD</Link></h2></li>
           <li className="center">
-            <div><Link to='/'>MENU1</Link></div>
-            <div><Link to='/menu2'>MENU2</Link></div>
-            <div><Link to='/menu3'>MENU3</Link></div>
-            <div><Link to='/board'>MEMBERS</Link></div>
-            <div><Link to='/firebasechat'>CHATTING</Link></div>
+            <div>
+              <Link to='/'>MENU1</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
+            <div>
+              <Link to='/menu2'>MENU2</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
+            <div>
+              <Link to='/menu3'>MENU3</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>  
+            </div>
+            <div>
+              <Link to='/board'>MEMBERS</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
+            <div>
+              <Link to='/firebasechat'>CHATTING</Link>
+              <ul>
+                <li>test_1</li>
+                <li>test_2</li>
+                <li>test_3</li>
+                <li>test_4</li>
+              </ul>
+            </div>
           </li>
           
           <li className="right">
@@ -219,6 +257,27 @@ function App() {
               {/* {user?(      
                 <Member user={user} userCurrent={userCurrent} handleLogout={handleLogout}/>
             ):(<></>)} */}
+              <Switch>
+                <Route path='/board'>
+                  {user?(
+                    <>
+                    
+                    </>
+                  ) : (
+                    <>
+                    SNS 로그인 &nbsp; | 
+                    <a href="javascript:KakaoLogin();"><img style={{height:'40px', width:'auto', verticalAlign:'middle'}} src="img/kakao.png" alt="" /></a>
+                    <img 
+                    onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/premium-icon-google-2504739.png" alt="" />
+                    <img
+                    onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.FacebookAuthProvider())}
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/free-icon-facebook-2111398.png" alt="" />
+                    
+                    </>
+                  )}
+                </Route>
+              </Switch>
             </div>
           </li>
         </ul>
@@ -227,12 +286,12 @@ function App() {
             <div>
               <div>
                 <ul style={{position:'relative'}}>
-                  <li className="left">
+                  {/* <li className="left">
                     <div><Link to='/'>MENU1</Link></div>
                     <div><Link to='/menu2'>MENU2</Link></div>
                     <div><Link to='/menu3'>MENU3</Link></div>
                     <div><Link to='/'>MENU4</Link></div>
-                  </li>
+                  </li> */}
       <Switch>
         <Route exact path='/' component={Home}>
             
@@ -310,8 +369,6 @@ function App() {
             setEditUid={setEditUid}
           />
         </Route>
-        <Route path='/chat' component={Chat} />
-        <Route path='/join/join' component={ChatJoin} /> 
         <AuthProvider>
           <Route path="/firebasechat/chats" component={FirebaseChat} userCurrent={userCurrent} />
           <Route exact path="/firebasechat" component={FirebaseLogin} />
