@@ -25,7 +25,7 @@ const Board = (props) => {
     const [desc, setDesc] = useState('');
     const [fileUrl, setFileUrl] = useState('');
     let file = "";
-    const [uploadStatus, setUploadStatus]= useState(true);
+    const [uploadStatus, setUploadStatus] = useState(true);
     const [fileType, setFileType] = useState('');
 
     const onFileChange = async (e) => {

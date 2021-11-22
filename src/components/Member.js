@@ -21,6 +21,10 @@ const Member = (props) => {
 
     useEffect(()=>{
         getMember();
+        // userRef.get().then((item)=>{ 
+        //     const items = item.docs.map((doc) => doc.data());
+            
+        // });
     },[]);
 
 

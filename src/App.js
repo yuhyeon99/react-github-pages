@@ -36,7 +36,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //<========== 210529 firebase & CRUD 구현 ==========>
 //<========== 210529 firebase & CRUD 구현 ==========>
 function App() {
-
+  const { Kakao } = window;
+  const pUrl = process.env.PUBLIC_URL;
   const [study, setStudy] = useState(false);
   const [career, setCareer] = useState(false);
   const [summary, setSummary] = useState(false);
@@ -102,13 +103,25 @@ function App() {
       
   };
 
-  const handleSignup = () => {
+  const handleSignup = (kakao) => {
     clearErrors();
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        userRef
+        if(kakao){
+          userRef
+          .doc(`${kakao}`)
+          .set({
+            name:"Name",
+            job:"Job",
+            location:"Location",
+            college:"College",
+            massage: massage, 
+            uid : kakao
+          })
+        }else{
+          userRef
           .doc(`${userCredential.user.uid}`)
           .set({
             name:"Name",
@@ -118,6 +131,7 @@ function App() {
             massage: massage, 
             uid : userCredential.user.uid
           })
+        }
       })
       .catch(err => {
         switch(err.code){
@@ -136,6 +150,30 @@ function App() {
     fire.auth().signOut();
     window.location.href='/board';
   };
+
+  function KakaoLogin() {
+    window.Kakao.Auth.login({
+      scope:'profile_nickname, 	profile_image, account_email, gender',
+      success : function (authObj){
+        console.log(authObj);
+        window.Kakao.API.request({
+          url:'/v2/user/me',
+          success : res=>{
+            const kakao_account = res.kakao_account;
+            console.log(kakao_account);
+
+            // userRef.doc("YYS0PJrVPDUye1FlbdXccla4MLr2").get().then((doc)=>{ 
+            //     const items = doc.data();
+            //     console.log(items);
+            // });
+          }
+        });
+      },
+      fail: function (err){
+        console.log(err);
+      }
+    })
+  }
 
   const authListener = () => {
     setLoading(true);
@@ -265,13 +303,13 @@ function App() {
                   ) : (
                     <>
                     SNS 로그인 &nbsp; | 
-                    <a href="javascript:KakaoLogin();"><img style={{height:'40px', width:'auto', verticalAlign:'middle'}} src="img/kakao.png" alt="" /></a>
+                    <img onClick={()=>KakaoLogin()} style={{height:'40px', width:'auto', verticalAlign:'middle'}} src={pUrl + "images/kakao.png"} alt="" />
                     <img 
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
-                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/premium-icon-google-2504739.png" alt="" />
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "images/premium-icon-google-2504739.png"} alt="" />
                     <img
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.FacebookAuthProvider())}
-                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/free-icon-facebook-2111398.png" alt="" />
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "images/free-icon-facebook-2111398.png"} alt="" />
                     
                     </>
                   )}
