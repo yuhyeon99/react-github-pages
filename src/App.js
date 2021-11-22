@@ -189,8 +189,38 @@ function App() {
     });
   };
 
+  function KakaoLogin() {
+    window.Kakao.Auth.login({
+      scope:'profile_nickname, 	profile_image, account_email, gender',
+      success : function (authObj){
+        console.log(authObj);
+        window.Kakao.API.request({
+          url:'/v2/user/me',
+          success : res=>{
+            const kakao_account = res.kakao_account;
+            console.log(kakao_account);
+            const items = [];
+            userRef.where("email","==",kakao_account.email).onSnapshot((querySnapshot)=>{
+                querySnapshot.forEach((doc)=>{
+                    items.push(doc.data());
+                })
+            });
+            // 이미 회원가입 된 것
+            if(items.length > 0){
+              
+            }
+          }
+        });
+      },
+      fail: function (err){
+        console.log(err);
+      }
+    })
+  }
+
   useEffect(()=>{
     authListener();
+    
   }, []);
 
   // login
@@ -303,7 +333,7 @@ function App() {
                   ) : (
                     <>
                     SNS 로그인 &nbsp; | 
-                    <img onClick={()=>KakaoLogin()} style={{height:'40px', width:'auto', verticalAlign:'middle'}} src={pUrl + "images/kakao.png"} alt="" />
+                    <img onClick={()=>KakaoLogin()} style={{height:'40px', width:'auto', verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "images/kakao.png"} alt="" />
                     <img 
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
                     style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "images/premium-icon-google-2504739.png"} alt="" />
@@ -407,8 +437,8 @@ function App() {
           />
         </Route>
         <AuthProvider>
-        <Route path="/firebasechat/chats" component={FirebaseChat} />
-        <Route exact path="/firebasechat" component={FirebaseLogin} />
+          <Route path="/firebasechat/chats" component={FirebaseChat} userCurrent={userCurrent} />
+          <Route exact path="/firebasechat" component={FirebaseLogin} />
         </AuthProvider>
       </Switch>
       

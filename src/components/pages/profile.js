@@ -15,7 +15,7 @@ const Profile = (props) =>{
     const summaryRef = firebase.firestore().collection("summary");
     
     
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     
     const [info, setInfo] = useState({
         name:"Name",
@@ -226,9 +226,11 @@ const Profile = (props) =>{
         alert("삭제되었습니다.");
     };
     
+
     if(loading){
         return <h1 className="loading">Loading...</h1>
     }
+    
 
     return (
         <>
@@ -239,7 +241,7 @@ const Profile = (props) =>{
                 <div className="infoBox">
                     <ul>
                         <li className="infoBg"></li>
-                        <label for="change_file">
+                        <label htmlFor="change_file">
                             <li className="profileImg" style={info.profileImg ? {background:`url(${info.profileImg})center center /cover`} : {} }>
                                 {info.profileImg ? (
                                     <></>
@@ -289,9 +291,9 @@ const Profile = (props) =>{
                                 <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setSummary(!summary)} style={{cursor:"pointer"}} icon={faPlus} /></p>
                             )}
 
-                            {summaryList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
-                                <div className="studyList">
-                                    <p class="summary">{list.club}</p>
+                            {summaryList.filter((val)=>val.user == userCurrent.uid).map((list, index)=>(
+                                <div className="studyList" key={index}>
+                                    <p className="summary">{list.club}</p>
                                     <p className="editArea">
                                         <FontAwesomeIcon style={{cursor:"pointer", marginRight:"10px"}} icon={faPen} onClick={(e)=>editSummary(list.id)} />
                                         <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={deleteProfile} data-type="summary" data-uid={list.id} />
@@ -306,10 +308,10 @@ const Profile = (props) =>{
                         <li className="infoArea">
                             <p className="career">경력</p>
                             <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setCareer(!career)} style={{cursor:"pointer"}} icon={faPlus} /></p>
-                            {careerList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
-                                <div className="studyList">
+                            {careerList.filter((val)=>val.user == userCurrent.uid).map((list, index)=>(
+                                <div className="studyList" key={index}>
                                     <p className="graduate"><img src={list.fileUrl}/></p>
-                                    <p class="gInfo">
+                                    <p className="gInfo">
                                         <span>{list.college}</span><br/>
                                         <span>{list.cLevel}, {list.major}</span><br/>
                                         <span>{list.comeInYear}년-{list.comeOutYear}년</span> <br /> <br />
@@ -329,10 +331,10 @@ const Profile = (props) =>{
                         <li className="infoArea">
                             <p className="career">학력</p>
                             <p className="editBtn" ><FontAwesomeIcon onClick={(e)=>setStudy(!study)} style={{cursor:"pointer"}} icon={faPlus} /></p>
-                            {studyList.filter((val)=>val.user == userCurrent.uid).map((list)=>(
-                                <div className="studyList">
+                            {studyList.filter((val)=>val.user == userCurrent.uid).map((list, index)=>(
+                                <div className="studyList" key={index}>
                                     <p className="graduate"><img src={list.fileUrl}/></p>
-                                    <p class="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
+                                    <p className="gInfo"><span>{list.college}</span><br/><span>{list.cLevel}, {list.major}</span><br/><span>{list.comeInYear}년-{list.comeOutYear}년</span></p>
                                     <p className="editArea">
                                         <FontAwesomeIcon style={{cursor:"pointer", marginRight:"10px"}} icon={faPen} onClick={(e)=>editStudy(list.id)} />
                                         <FontAwesomeIcon style={{cursor:"pointer"}} icon={faTimes} onClick={deleteProfile} data-type="study" data-uid={list.id} />
