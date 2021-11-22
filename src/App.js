@@ -313,12 +313,8 @@ function App() {
         <Route path='/chat' component={Chat} />
         <Route path='/join/join' component={ChatJoin} /> 
         <AuthProvider>
-<<<<<<< HEAD
-        <Route path="/firebasechat/chats" component={FirebaseChat} userCurrent={userCurrent} />
-=======
-        <Route path="/firebasechat/chats" component={FirebaseChat} />
->>>>>>> 009cebfecab91b929ebd4dd81c6944b5b7dac77a
-        <Route exact path="/firebasechat" component={FirebaseLogin} />
+          <Route path="/firebasechat/chats" component={FirebaseChat} userCurrent={userCurrent} />
+          <Route exact path="/firebasechat" component={FirebaseLogin} />
         </AuthProvider>
       </Switch>
       
