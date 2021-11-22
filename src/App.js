@@ -102,13 +102,25 @@ function App() {
       
   };
 
-  const handleSignup = () => {
+  const handleSignup = (kakao) => {
     clearErrors();
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        userRef
+        if(kakao){
+          userRef
+          .doc(`${kakao}`)
+          .set({
+            name:"Name",
+            job:"Job",
+            location:"Location",
+            college:"College",
+            massage: massage, 
+            uid : kakao
+          })
+        }else{
+          userRef
           .doc(`${userCredential.user.uid}`)
           .set({
             name:"Name",
@@ -118,6 +130,7 @@ function App() {
             massage: massage, 
             uid : userCredential.user.uid
           })
+        }
       })
       .catch(err => {
         switch(err.code){
@@ -150,6 +163,35 @@ function App() {
       setLoading(false);
     });
   };
+
+  function KakaoLogin() {
+    window.Kakao.Auth.login({
+      scope:'profile_nickname, 	profile_image, account_email, gender',
+      success : function (authObj){
+        console.log(authObj);
+        window.Kakao.API.request({
+          url:'/v2/user/me',
+          success : res=>{
+            const kakao_account = res.kakao_account;
+            console.log(kakao_account);
+            const items = [];
+            userRef.where("email","==",kakao_account.email).onSnapshot((querySnapshot)=>{
+                querySnapshot.forEach((doc)=>{
+                    items.push(doc.data());
+                })
+            });
+            // 이미 회원가입 된 것
+            if(items.length > 0){
+              
+            }
+          }
+        });
+      },
+      fail: function (err){
+        console.log(err);
+      }
+    })
+  }
 
   useEffect(()=>{
     authListener();
@@ -266,7 +308,7 @@ function App() {
                   ) : (
                     <>
                     SNS 로그인 &nbsp; | 
-                    <a href="javascript:KakaoLogin();"><img style={{height:'40px', width:'auto', verticalAlign:'middle'}} src="img/kakao.png" alt="" /></a>
+                    <img onClick={()=>KakaoLogin()} style={{height:'40px', width:'auto', verticalAlign:'middle', cursor:'pointer'}} src="img/kakao.png" alt="" />
                     <img 
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
                     style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src="img/premium-icon-google-2504739.png" alt="" />
