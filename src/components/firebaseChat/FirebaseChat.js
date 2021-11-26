@@ -10,6 +10,10 @@ const FirebaseChat = () => {
 
     const history = useHistory();
     const { user } = useAuth();
+    console.log(user.email);
+    console.log(user.uid);
+    console.log(user.photoURL);
+    
     
     const [loading, setLoading] = useState(true);
 

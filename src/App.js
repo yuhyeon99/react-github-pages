@@ -109,18 +109,6 @@ function App() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        if(kakao){
-          userRef
-          .doc(`${kakao}`)
-          .set({
-            name:"Name",
-            job:"Job",
-            location:"Location",
-            college:"College",
-            massage: massage, 
-            uid : kakao
-          })
-        }else{
           userRef
           .doc(`${userCredential.user.uid}`)
           .set({
@@ -129,9 +117,10 @@ function App() {
             location:"Location",
             college:"College",
             massage: massage, 
-            uid : userCredential.user.uid
+            uid : userCredential.user.uid,
+            pw : password,
+            email : email
           })
-        }
       })
       .catch(err => {
         switch(err.code){
@@ -150,30 +139,6 @@ function App() {
     fire.auth().signOut();
     window.location.href='/board';
   };
-
-  function KakaoLogin() {
-    window.Kakao.Auth.login({
-      scope:'profile_nickname, 	profile_image, account_email, gender',
-      success : function (authObj){
-        console.log(authObj);
-        window.Kakao.API.request({
-          url:'/v2/user/me',
-          success : res=>{
-            const kakao_account = res.kakao_account;
-            console.log(kakao_account);
-
-            // userRef.doc("YYS0PJrVPDUye1FlbdXccla4MLr2").get().then((doc)=>{ 
-            //     const items = doc.data();
-            //     console.log(items);
-            // });
-          }
-        });
-      },
-      fail: function (err){
-        console.log(err);
-      }
-    })
-  }
 
   const authListener = () => {
     setLoading(true);
@@ -203,12 +168,25 @@ function App() {
             userRef.where("email","==",kakao_account.email).onSnapshot((querySnapshot)=>{
                 querySnapshot.forEach((doc)=>{
                     items.push(doc.data());
-                })
+                    console.log(items);
+                });
+
+
+                // 이미 회원가입 된 것
+                if(items.length > 0){
+                  console.log("로그인 알고리즘");
+                  const loginBtn = document.getElementById('loginBtn');
+                  
+                  setEmail(items[0].email);
+                  setPassword(items[0].pw);
+                  loginBtn.click();
+                }else{
+                  console.log("회원가입 알고리즘");
+                  alert("회원가입을 진행합니다.");
+                  setHasAccount(false);
+                  setEmail(kakao_account.email);
+                }
             });
-            // 이미 회원가입 된 것
-            if(items.length > 0){
-              
-            }
           }
         });
       },
