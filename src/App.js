@@ -161,11 +161,25 @@ function App() {
           success : res=>{
             const kakao_account = res.kakao_account;
             console.log(kakao_account);
+            const items = [];
+            userRef.where("email","==",kakao_account.email).onSnapshot((querySnapshot)=>{
+                querySnapshot.forEach((doc)=>{
+                    items.push(doc.data());
+                });
+                // 이미 회원가입 된 것
+                if(items.length > 0){
+                  const loginBtn = document.getElementById("loginBtn");
+                  setEmail(items[0].email);
+                  setPassword(items[0].pw);
 
-            // userRef.doc("YYS0PJrVPDUye1FlbdXccla4MLr2").get().then((doc)=>{ 
-            //     const items = doc.data();
-            //     console.log(items);
-            // });
+                  loginBtn.click();
+                }else{ 
+                  
+                  setHasAccount(false);
+                  setEmail(kakao_account.email);
+                }
+            });
+
           }
         });
       },
@@ -188,35 +202,6 @@ function App() {
       setLoading(false);
     });
   };
-
-  function KakaoLogin() {
-    window.Kakao.Auth.login({
-      scope:'profile_nickname, 	profile_image, account_email, gender',
-      success : function (authObj){
-        console.log(authObj);
-        window.Kakao.API.request({
-          url:'/v2/user/me',
-          success : res=>{
-            const kakao_account = res.kakao_account;
-            console.log(kakao_account);
-            const items = [];
-            userRef.where("email","==",kakao_account.email).onSnapshot((querySnapshot)=>{
-                querySnapshot.forEach((doc)=>{
-                    items.push(doc.data());
-                })
-            });
-            // 이미 회원가입 된 것
-            if(items.length > 0){
-              
-            }
-          }
-        });
-      },
-      fail: function (err){
-        console.log(err);
-      }
-    })
-  }
 
   useEffect(()=>{
     authListener();
