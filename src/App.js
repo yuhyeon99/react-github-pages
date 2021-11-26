@@ -109,18 +109,6 @@ function App() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        if(kakao){
-          userRef
-          .doc(`${kakao}`)
-          .set({
-            name:"Name",
-            job:"Job",
-            location:"Location",
-            college:"College",
-            massage: massage, 
-            uid : kakao
-          })
-        }else{
           userRef
           .doc(`${userCredential.user.uid}`)
           .set({
@@ -129,9 +117,10 @@ function App() {
             location:"Location",
             college:"College",
             massage: massage, 
-            uid : userCredential.user.uid
+            uid : userCredential.user.uid,
+            pw : password,
+            email : email
           })
-        }
       })
       .catch(err => {
         switch(err.code){
