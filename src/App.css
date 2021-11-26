@@ -244,3 +244,10 @@ input:focus{ outline:none; }
         stroke-dashoffset: 0;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .header{ height:190px; }
+    .header .left{ text-align:center; }
+    .header > ul > li{ width:100%; }
+    .middle { margin-top: 200px; }
+}
