@@ -307,13 +307,13 @@ function App() {
                   ) : (
                     <>
                     SNS 로그인 &nbsp; | 
-                    <img onClick={()=>KakaoLogin()} style={{height:'40px', width:'auto', verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "/images/kakao.png"} alt="" />
+                    <img onClick={()=>KakaoLogin()} style={{height:'40px', width:'auto', verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "/images/kakao.png"} alt="kakao" />
                     <img 
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
-                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "/images/premium-icon-google-2504739.png"} alt="" />
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "/images/premium-icon-google-2504739.png"} alt="google" />
                     <img
                     onClick={() => firebase.auth().signInWithRedirect(new firebase.auth.FacebookAuthProvider())}
-                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "/images/free-icon-facebook-2111398.png"} alt="" />
+                    style={{width:'30px',verticalAlign:'middle', cursor:'pointer'}} src={pUrl + "/images/free-icon-facebook-2111398.png"} alt="facebook" />
                     
                     </>
                   )}
