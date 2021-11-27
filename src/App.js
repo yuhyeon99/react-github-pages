@@ -161,11 +161,12 @@ function App() {
                   setEmail(items[0].email);
                   setPassword(items[0].pw);
 
-                  loginBtn.click();
+                  if(loginBtn)loginBtn.click();
                 }else{ 
                   
                   setHasAccount(false);
                   setEmail(kakao_account.email);
+                  
                 }
             });
 
