@@ -246,8 +246,13 @@ input:focus{ outline:none; }
 }
 
 @media screen and (max-width: 768px) {
-    .header{ height:190px; }
+    .header{ height:inherit; position:relative; }
     .header .left{ text-align:center; }
     .header > ul > li{ width:100%; }
-    .middle { margin-top: 200px; }
+    .header .center > div{ width:calc(100%/5); float:left; }
+    .header .center:hover > div > ul{ max-height:200px; }
+    .middle { margin-top: 0; }
+    .middle > div{ width:100%; }
+    .memberText p{ font-size:1vw; }
+    .logoutBtn button{ font-size:1vw; }
 }

@@ -262,7 +262,6 @@ function App() {
                 <li>test_1</li>
                 <li>test_2</li>
                 <li>test_3</li>
-                <li>test_4</li>
               </ul>
             </div>
             <div>
@@ -271,7 +270,6 @@ function App() {
                 <li>test_1</li>
                 <li>test_2</li>
                 <li>test_3</li>
-                <li>test_4</li>
               </ul>  
             </div>
             <div>
@@ -287,9 +285,7 @@ function App() {
               <Link to='/firebasechat'>CHATTING</Link>
               <ul>
                 <li>test_1</li>
-                <li>test_2</li>
-                <li>test_3</li>
-                <li>test_4</li>
+
               </ul>
             </div>
           </li>
