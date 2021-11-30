@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/react-github-pages/static/css/main.4f597a72.chunk.css",
+    "main.css": "/react-github-pages/static/css/main.68d50091.chunk.css",
     "main.js": "/react-github-pages/static/js/main.12914614.chunk.js",
     "main.js.map": "/react-github-pages/static/js/main.12914614.chunk.js.map",
     "runtime~main.js": "/react-github-pages/static/js/runtime~main.3f34eac9.js",
@@ -10,9 +10,9 @@
     "static/js/3.98617a41.chunk.js": "/react-github-pages/static/js/3.98617a41.chunk.js",
     "static/js/3.98617a41.chunk.js.map": "/react-github-pages/static/js/3.98617a41.chunk.js.map",
     "index.html": "/react-github-pages/index.html",
-    "precache-manifest.14e2aa60566ae050ab5e4cd9ca5be485.js": "/react-github-pages/precache-manifest.14e2aa60566ae050ab5e4cd9ca5be485.js",
+    "precache-manifest.73f23264dab110ea00415fb0eeb8ad2a.js": "/react-github-pages/precache-manifest.73f23264dab110ea00415fb0eeb8ad2a.js",
     "service-worker.js": "/react-github-pages/service-worker.js",
-    "static/css/main.4f597a72.chunk.css.map": "/react-github-pages/static/css/main.4f597a72.chunk.css.map",
+    "static/css/main.68d50091.chunk.css.map": "/react-github-pages/static/css/main.68d50091.chunk.css.map",
     "static/media/App.css": "/react-github-pages/static/media/profileBg.9c546ea1.png"
   }
 }
