@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/react-github-pages/static/css/main.68d50091.chunk.css",
-    "main.js": "/react-github-pages/static/js/main.352794b0.chunk.js",
-    "main.js.map": "/react-github-pages/static/js/main.352794b0.chunk.js.map",
+    "main.css": "/react-github-pages/static/css/main.869b6c94.chunk.css",
+    "main.js": "/react-github-pages/static/js/main.df811dbf.chunk.js",
+    "main.js.map": "/react-github-pages/static/js/main.df811dbf.chunk.js.map",
     "runtime~main.js": "/react-github-pages/static/js/runtime~main.3f34eac9.js",
     "runtime~main.js.map": "/react-github-pages/static/js/runtime~main.3f34eac9.js.map",
-    "static/js/2.851c2919.chunk.js": "/react-github-pages/static/js/2.851c2919.chunk.js",
-    "static/js/2.851c2919.chunk.js.map": "/react-github-pages/static/js/2.851c2919.chunk.js.map",
+    "static/js/2.5e4f204b.chunk.js": "/react-github-pages/static/js/2.5e4f204b.chunk.js",
+    "static/js/2.5e4f204b.chunk.js.map": "/react-github-pages/static/js/2.5e4f204b.chunk.js.map",
     "static/js/3.98617a41.chunk.js": "/react-github-pages/static/js/3.98617a41.chunk.js",
     "static/js/3.98617a41.chunk.js.map": "/react-github-pages/static/js/3.98617a41.chunk.js.map",
     "index.html": "/react-github-pages/index.html",
-    "precache-manifest.4de67c6857e984df95589e8eeab0dc27.js": "/react-github-pages/precache-manifest.4de67c6857e984df95589e8eeab0dc27.js",
+    "precache-manifest.008f70d5d76091e23c8f151de6150fe8.js": "/react-github-pages/precache-manifest.008f70d5d76091e23c8f151de6150fe8.js",
     "service-worker.js": "/react-github-pages/service-worker.js",
-    "static/css/main.68d50091.chunk.css.map": "/react-github-pages/static/css/main.68d50091.chunk.css.map",
+    "static/css/main.869b6c94.chunk.css.map": "/react-github-pages/static/css/main.869b6c94.chunk.css.map",
     "static/media/App.css": "/react-github-pages/static/media/profileBg.9c546ea1.png"
   }
 }
