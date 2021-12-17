@@ -42,15 +42,17 @@ input:focus{ outline:none; }
 
 /* header */
 .header{ height:90px; padding:0 20px; width:100%; float:left; background:#fff; box-shadow:0 0 5px #999; position: fixed; z-index:99; }
-.header > ul > li{ width:33.3334%; float:left; line-height:30px; }
-.header .left{ text-align:left; line-height:90px; }
-.header .center{ text-align:center; line-height:90px; }
+.header > h2{ position: absolute; line-height:90px; }
+.header > ul{ width:1400px; margin:0 auto; }
+.header > ul > li{  float:left; line-height:30px; }
+.header .left{ text-align:left; line-height:90px; width:20%; height:90px; }
+.header .center{ text-align:center; line-height:90px; width:60%; }
 .header .center > div{ display:inline-block; padding:0 10px; }
 .header .center > div > ul{ background:#fff; width:100%; float:left; max-height:0px; overflow:hidden; transition:all .5s ease-in-out; }
 .header .center > div > ul > li{ line-height:40px;  }
 .header .center > div > ul > li:hover{ cursor:pointer; text-decoration: underline; }
 .header .center > div:hover > ul{ max-height:200px; }
-.header .right{ text-align:right; }
+.header .right{ text-align:right; width:20%; }
 .header .right > div{ line-height:90px; }
 .header .right img{ margin:0 10px; }
 .header .right p{ float:right; margin-left:30px; }
@@ -250,10 +252,13 @@ input:focus{ outline:none; }
 
 @media screen and (max-width: 768px) {
     .header{ height:inherit; position:relative; }
+    .header > h2{ line-height:90px; left:50%; transform:translateX(-50%) }
     .header .left{ text-align:center; }
-    .header > ul > li{ width:100%; }
+    .header > ul{ width:100%; }
+    .header > ul > li{ width:100% !important; }
     .header .center > div{ width:calc(100%/5); float:left; }
     .header .center:hover > div > ul{ max-height:200px; }
+    .header .right{text-align: center;}
     .tt{ width:100%; padding:0 !important; }
     .tc{ width:100%; }
 

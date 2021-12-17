@@ -15,10 +15,9 @@ const Board = (props) => {
     const match = useRouteMatch('/board');
 
     const {scrollInfos, scrollRemove} = useScrollMove({
-        page : `view_`,
+        page : `/board`,
         path : `/view/`
     });
-
 
     const [loading, setLoading] = useState(false);
     
@@ -77,13 +76,20 @@ const Board = (props) => {
     }
 
 
-    function getLists(){
+    async function getLists(){
         // setLoading(true);
-        ref.orderBy("dateTime","desc").get().then((item)=>{
+        await ref.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc) => doc.data());
             setLists(items);
             // setLoading(false);
         });
+
+        if (scrollInfos) {
+            window.scrollTo(0, scrollInfos);
+            const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+            scrollRemove();
+            console.log(scrollInfos);
+        }
     }
 
     async function addBoard(newBoard){
@@ -173,20 +179,9 @@ const Board = (props) => {
         getLists();
     }, []);
 
-    useEffect(() => {
-        if (scrollInfos && match?.isExact ) {
-          window.scrollTo(0, scrollInfos);
-          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-          scrollRemove();
-          console.log(scrollInfos);
-        }
-      }, [scrollInfos, scrollRemove, match]);
-    
-
-
-    if(loading){
-        return <h1 className="loading">Loading...</h1>
-    }
+    // useEffect(() => {
+        
+    // }, [scrollInfos, scrollRemove]);
 
     return (
         <>

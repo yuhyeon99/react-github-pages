@@ -20,19 +20,19 @@ const View =  () =>{
         loadData();
     },[]);
 
-    const { scrollInfos, scrollRemove } = useScrollMove({
-        page: `view_${id}`,
-        path: `/view/${id}`
-      });
+    // const { scrollInfos, scrollRemove } = useScrollMove({
+    //     page: `view_${id}`,
+    //     path: `/view/${id}`
+    //   });
       
-    useEffect(() => {
-        if (scrollInfos ) {
-          window.scrollTo(0, scrollInfos);
-          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    // useEffect(() => {
+    //     if (scrollInfos ) {
+    //       window.scrollTo(0, scrollInfos);
+    //       const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
           
-          scrollRemove();
-        }
-      }, [scrollInfos, scrollRemove]);
+    //       scrollRemove();
+    //     }
+    //   }, [scrollInfos, scrollRemove]);
 
 
 
