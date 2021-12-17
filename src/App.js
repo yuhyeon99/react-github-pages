@@ -244,8 +244,9 @@ function App() {
         setEditUid={setEditUid}
       />
       <div className="header">
+      <h2><Link to='/'>BOARD</Link></h2>
         <ul>
-          <li className="left"><h2><Link to='/'>BOARD</Link></h2></li>
+          <li className="left"></li>
           <li className="center">
             <div>
               <Link to='/'>MENU1</Link>

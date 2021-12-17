@@ -17,7 +17,6 @@ const Board = (props) => {
         page : `/view/`
     });
 
-
     const [loading, setLoading] = useState(false);
     
     const [progress, setProgress] = useState('');
@@ -75,13 +74,20 @@ const Board = (props) => {
     }
 
 
-    function getLists(){
+    async function getLists(){
         // setLoading(true);
-        ref.orderBy("dateTime","desc").get().then((item)=>{
+        await ref.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc) => doc.data());
             setLists(items);
             // setLoading(false);
         });
+
+        if (scrollInfos) {
+            window.scrollTo(0, scrollInfos);
+            const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+            scrollRemove();
+            console.log(scrollInfos);
+        }
     }
 
     async function addBoard(newBoard){
@@ -171,20 +177,9 @@ const Board = (props) => {
         getLists();
     }, []);
 
-    useEffect(() => {
-        if (scrollInfos ) {
-          window.scrollTo(0, scrollInfos);
-          const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-          scrollRemove();
-          console.log(scrollInfos);
-        }
-      }, [scrollInfos, scrollRemove]);
-    
-
-
-    if(loading){
-        return <h1 className="loading">Loading...</h1>
-    }
+    // useEffect(() => {
+        
+    // }, [scrollInfos, scrollRemove]);
 
     return (
         <>
