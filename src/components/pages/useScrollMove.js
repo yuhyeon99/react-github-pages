@@ -6,8 +6,7 @@ const useScrollMove = ({ page, path, dom }) => {
   const [scrollInfos, setScrollInfos] = useState(() => localStorage.getItem(`${page}_scroll_pos`));
   const match = useRouteMatch(path);
   const scrollSave = useCallback(() => {
-    const scrollPos = window.scrollY;
-    console.log(scrollPos);
+    const scrollPos = dom ? dom.scrollTop : window.scrollY;
     setScrollInfos(scrollPos);
     return localStorage.setItem(`${page}_scroll_pos`, scrollPos);
   }, [dom]);

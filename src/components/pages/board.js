@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../fire';
-import {useHistory} from 'react-router';
+import {useHistory, useRouteMatch} from 'react-router';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useScrollMove from "./useScrollMove";
 
@@ -11,10 +12,11 @@ const Board = (props) => {
     
     const {userCurrent} = props;
     const history = useHistory();
+    const match = useRouteMatch('/board');
 
     const {scrollInfos, scrollRemove} = useScrollMove({
         page : `view_`,
-        page : `/view/`
+        path : `/view/`
     });
 
 
@@ -172,13 +174,13 @@ const Board = (props) => {
     }, []);
 
     useEffect(() => {
-        if (scrollInfos ) {
+        if (scrollInfos && match?.isExact ) {
           window.scrollTo(0, scrollInfos);
           const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
           scrollRemove();
           console.log(scrollInfos);
         }
-      }, [scrollInfos, scrollRemove]);
+      }, [scrollInfos, scrollRemove, match]);
     
 
 
@@ -290,6 +292,12 @@ const Board = (props) => {
                         <li className="lb">
                             <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => deleteBoard(list) }>삭제</button>
                             <button style={{display: list.email == userCurrent.email ? "" : "none" }} onClick={ () => modifyBoard(list) }>수정</button>
+                        </li>
+                        <li className="status">
+
+                        </li>
+                        <li className="comment">
+                            <p style={{textAlign:"center",cursor:"pointer"}}><FontAwesomeIcon style={{cursor:"pointer"}} icon={faCommentAlt}/> 댓글 달기</p>
                         </li>
                     </ul>
                     </div>
