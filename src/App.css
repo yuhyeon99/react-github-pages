@@ -66,7 +66,7 @@ input:focus{ outline:none; }
 .middle .left > div{ line-height:40px; }
 
 .middle .center{ width:60%; position: relative; left:20%; }
-.middle .center div{ width:100%; float:left; padding:10px 10px 0px 10px; border-radius:5px; background:#fff; box-shadow: 0 0 5px #ccc; }
+.middle .center > div{ width:100%; float:left; padding:10px 10px 0px 10px; border-radius:5px; background:#fff; box-shadow: 0 0 5px #ccc; }
 .middle .writeFrm{ float:left; }
 .middle .writeFrm ul{ width:100%; float:left; }
 .middle .writeFrm li{ float:left; line-height:40px; }
@@ -77,9 +77,14 @@ input:focus{ outline:none; }
 .viewLm img{ object-fit:cover; }
 .middle .lists .lt{ font-size:18px; font-weight:600; }
 .middle .lists .lb{ margin-top:10px; }
-.middle .lists .comment{ padding:5px 0; border-top:solid 1px #999; }
+.middle .lists .comment{ padding:5px 0; border-top:solid 1px #ced0d4; }
 .middle .lists .comment p{ padding:5px; }
 .middle .lists .comment p:hover{ background:#f2f2f2; }
+.middle .lists .commentArea{ border-radius:20px; border:none; background:#f2f2f2; height:40px; width:95%; padding-left:10px;  }
+.middle .lists .comment_write{ display:none; margin:10px 0; }
+.middle .lists .comment_write .imgArea{ width:5%; height:40px; }
+.middle .lists .comment_write .imgArea img{ width:40px; height:40px; border-radius:50%; }
+.middle .lists .comment_write > *{ float:left; }
 
 .middle .right{ padding-left:2%; width:20%; position:relative; left:20%; }
 .middle .right > div{ width:100%; float:left; border-radius:10px; box-shadow: 0 0 5px #ccc; background:#fff; margin-bottom:20px; }

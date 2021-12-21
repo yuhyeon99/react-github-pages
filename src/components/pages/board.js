@@ -11,6 +11,7 @@ import useScrollMove from "./useScrollMove";
 const Board = (props) => {
     
     const {userCurrent} = props;
+    console.log(userCurrent);
     const history = useHistory();
     const match = useRouteMatch('/board');
 
@@ -20,7 +21,19 @@ const Board = (props) => {
     });
 
     const [loading, setLoading] = useState(false);
-    
+
+    const [memberImg, setMemberImg] = useState([]);
+
+    function getMember(){
+        const userRef = firebase.firestore().collection("Users");
+        userRef.doc(userCurrent.uid).get().then((doc)=>{
+            const fileUrl = doc.data().profileImg;
+            setMemberImg(fileUrl);
+        }).catch((err)=>{
+            console.log(err);
+        });
+        
+    }    
     const [progress, setProgress] = useState('');
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
@@ -174,9 +187,16 @@ const Board = (props) => {
         setModifyShow(!modifyShow);
         });
     }
+    const commentSet = (idx) => {
+        const comment = document.getElementsByClassName("comment")[0];
+        const commentInput = document.getElementsByClassName("comment_write")[0];
+        comment.style.borderBottom = "solid 1px #ced0d4";
+        commentInput.style.display = "block";
+    }
 
     useEffect(()=>{
         getLists();
+        getMember();
     }, []);
 
     // useEffect(() => {
@@ -292,7 +312,13 @@ const Board = (props) => {
 
                         </li>
                         <li className="comment">
-                            <p style={{textAlign:"center",cursor:"pointer"}}><FontAwesomeIcon style={{cursor:"pointer"}} icon={faCommentAlt}/> 댓글 달기</p>
+                            <p onClick={()=>commentSet(index)} style={{textAlign:"center",cursor:"pointer"}}><FontAwesomeIcon style={{cursor:"pointer"}} icon={faCommentAlt}/> 댓글 달기</p>
+                        </li>
+                        <li className="comment_write">
+                            <div className="imgArea">
+                                <img src={memberImg ? memberImg : {} } alt="" />
+                            </div>
+                            <input className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
                         </li>
                     </ul>
                     </div>
