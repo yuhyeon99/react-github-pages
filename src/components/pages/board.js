@@ -11,7 +11,6 @@ import useScrollMove from "./useScrollMove";
 const Board = (props) => {
     
     const {userCurrent} = props;
-    console.log(userCurrent);
     const history = useHistory();
     const match = useRouteMatch('/board');
 
@@ -73,6 +72,7 @@ const Board = (props) => {
     const [writeShow, setWriteShow] = useState(false);
     const [modifyShow, setModifyShow] = useState(false);
     const [lists, setLists] = useState([]);
+    const [comments, setComments] = useState([]);
 
     const [modifyId, setModifyId] = useState();
     const [modifyTitle, setModifyTitle] = useState();
@@ -82,7 +82,11 @@ const Board = (props) => {
     
     const [searchTerm, setSearchTerm] = useState("");
 
+    const [commentText, setCommentText] = useState("");
+
     const ref = firebase.firestore().collection("crudtest");
+    const commentRef = firebase.firestore().collection("comments");
+    
 
     const onClick = id =>{
         history.push(`/view/${id}`);
@@ -97,6 +101,13 @@ const Board = (props) => {
             // setLoading(false);
         });
 
+        commentRef.orderBy("dateTime","desc").get().then((item)=>{
+            const items = item.docs.map((doc) => doc.data());
+            setComments(items);
+            console.log(items[0].dateTime);
+            // setLoading(false);
+        });
+
         if (scrollInfos) {
             window.scrollTo(0, scrollInfos);
             const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
@@ -106,7 +117,7 @@ const Board = (props) => {
     }
 
     async function addBoard(newBoard){
-        
+         
         if(!uploadStatus){
             alert('이미지 업로드 중입니다.');
             return false;
@@ -188,10 +199,24 @@ const Board = (props) => {
         });
     }
     const commentSet = (idx) => {
-        const comment = document.getElementsByClassName("comment")[0];
-        const commentInput = document.getElementsByClassName("comment_write")[0];
+        const comment = document.getElementsByClassName("comment")[idx];
+        const commentInput = document.getElementsByClassName("comment_write")[idx];
         comment.style.borderBottom = "solid 1px #ced0d4";
         commentInput.style.display = "block";
+    }
+
+    const commitComment = (newComment) => {
+        if(window.event.keyCode == 13){
+            // enter 키 입력했을 때 발생하는 이벤트
+            commentRef
+            .doc(newComment.id)
+            .set(newComment)
+            .catch((err)=>{
+                console.error(err);
+            });
+
+            getLists();
+        }
     }
 
     useEffect(()=>{
@@ -318,7 +343,17 @@ const Board = (props) => {
                             <div className="imgArea">
                                 <img src={memberImg ? memberImg : {} } alt="" />
                             </div>
-                            <input className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
+                            <input onKeyDown={()=>commitComment({id : list.id, email:userCurrent.email, commentText ,dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" onChange={(e)=>{setCommentText(e.target.value)}} value={commentText} placeHolder="댓글을 입력하세요..." />
+                            {comments.filter((val)=>{
+                                if(list.id == val.id){
+                                    return val;
+                                }
+                            }).map((list,idx)=>(
+                                <div>
+                                    {/* display 시킬 내용들 출력란 */}
+                                    {list.dateTime.toDate().toDateString()}
+                                </div>
+                            ))}
                         </li>
                     </ul>
                     </div>
