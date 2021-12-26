@@ -82,7 +82,6 @@ const Board = (props) => {
     
     const [searchTerm, setSearchTerm] = useState("");
 
-    const [commentText, setCommentText] = useState("");
 
     const ref = firebase.firestore().collection("crudtest");
     const commentRef = firebase.firestore().collection("comments");
@@ -101,10 +100,10 @@ const Board = (props) => {
             // setLoading(false);
         });
 
-        commentRef.orderBy("dateTime","desc").get().then((item)=>{
+        await commentRef.orderBy("dateTime","desc").get().then((item)=>{
             const items = item.docs.map((doc) => doc.data());
+            // items.dateTime = items.dateTime.toDate().toDateString();
             setComments(items);
-            console.log(items[0].dateTime);
             // setLoading(false);
         });
 
@@ -207,9 +206,12 @@ const Board = (props) => {
 
     const commitComment = (newComment) => {
         if(window.event.keyCode == 13){
+            const commentText = document.getElementsByClassName("commentArea")[0].value;
+            newComment.commentText = commentText;
             // enter 키 입력했을 때 발생하는 이벤트
-            commentRef
-            .doc(newComment.id)
+
+            commentRef  
+            .doc(newComment.uid)
             .set(newComment)
             .catch((err)=>{
                 console.error(err);
@@ -343,16 +345,19 @@ const Board = (props) => {
                             <div className="imgArea">
                                 <img src={memberImg ? memberImg : {} } alt="" />
                             </div>
-                            <input onKeyDown={()=>commitComment({id : list.id, email:userCurrent.email, commentText ,dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" onChange={(e)=>{setCommentText(e.target.value)}} value={commentText} placeHolder="댓글을 입력하세요..." />
+                            <input onKeyDown={()=>commitComment({uid : uuidv4(), id : list.id, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
                             {comments.filter((val)=>{
                                 if(list.id == val.id){
                                     return val;
                                 }
                             }).map((list,idx)=>(
-                                <div>
+                                <div style={{width:'100%',float:'left', marginTop:'20px'}}>
                                     {/* display 시킬 내용들 출력란 */}
-                                    {list.dateTime.toDate().toDateString()}
+                                    <p style={{width:'10%', float:'left'}}>{list.email}</p>
+                                    <p style={{width:'', float:'left' ,padding:'10px 15px', borderRadius:'20px', background:'#ced0d4'}}>{list.commentText}</p>
+                                    {/* {list.dateTime.toDate().toDateString()} */}
                                 </div>
+                                
                             ))}
                         </li>
                     </ul>
