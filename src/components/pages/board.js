@@ -206,8 +206,8 @@ const Board = (props) => {
 
     const commitComment = (newComment) => {
         if(window.event.keyCode == 13){
-            const commentText = document.getElementsByClassName("commentArea")[0].value;
-            newComment.commentText = commentText;
+            const commentText = document.getElementsByClassName("commentArea")[newComment.idx];
+            newComment.commentText = commentText.value;
             // enter 키 입력했을 때 발생하는 이벤트
 
             commentRef  
@@ -218,6 +218,8 @@ const Board = (props) => {
             });
 
             getLists();
+            commentText.value = '';
+            
         }
     }
 
@@ -345,7 +347,7 @@ const Board = (props) => {
                             <div className="imgArea">
                                 <img src={memberImg ? memberImg : {} } alt="" />
                             </div>
-                            <input onKeyDown={()=>commitComment({uid : uuidv4(), id : list.id, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
+                            <input onKeyDown={()=>commitComment({img: memberImg, idx : index, uid : uuidv4(), id : list.id, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
                             {comments.filter((val)=>{
                                 if(list.id == val.id){
                                     return val;
