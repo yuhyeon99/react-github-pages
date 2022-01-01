@@ -206,12 +206,12 @@ const Board = (props) => {
 
     const commitComment = (newComment) => {
         if(window.event.keyCode == 13){
-            const commentText = document.getElementsByClassName("commentArea")[0].value;
-            if(!commentText || commentText.trim() == ""){
+            const commentText = document.getElementsByClassName("commentArea")[0];
+            if(!commentText.value || commentText.value.trim() == ""){
                 return false;
             }
 
-            newComment.commentText = commentText;
+            newComment.commentText = commentText.value;
             // enter 키 입력했을 때 발생하는 이벤트
 
             commentRef  
