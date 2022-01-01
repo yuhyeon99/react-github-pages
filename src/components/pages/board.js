@@ -222,6 +222,8 @@ const Board = (props) => {
             });
 
             getLists();
+            commentText.value = '';
+            
         }
     }
 
@@ -349,7 +351,7 @@ const Board = (props) => {
                             <div className="imgArea">
                                 <img src={memberImg ? memberImg : pUrl + "/images/basic-profile-img.png" } alt="" />
                             </div>
-                            <input onKeyDown={()=>commitComment({uid : uuidv4(), id : list.id, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
+                            <input onKeyDown={()=>commitComment({img: memberImg, idx : index, uid : uuidv4(), id : list.id, email:userCurrent.email, dateTime : firebase.firestore.FieldValue.serverTimestamp(), })} className="commentArea" type="text" placeHolder="댓글을 입력하세요..." />
                             {comments.filter((val)=>{
                                 if(list.id == val.id){
                                     return val;
