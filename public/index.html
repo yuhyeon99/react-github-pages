@@ -27,7 +27,7 @@
     <title>React App</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- <noscript>You need to enable JavaScript to run this app.</noscript> -->
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -40,8 +40,12 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b58884e941ca4f1738417cc31459ac32&libraries=services&autoload=false"></script>
     <script>
       window.Kakao.init("de0a9adf6c2314ec65debddd28116b56");
+      kakao.maps.load(function (){
+        var map = new kakao.maps.Map(node, options);
+      });
     </script>
   </body>
 </html>

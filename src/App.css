@@ -98,7 +98,7 @@ input:focus{ outline:none; }
 .middle .boxmenu_1 .memberText:hover p{ text-decoration: underline; }
 .middle .boxmenu_1 .logoutBtn{ text-align: center; }
 .middle .right > .boxmenu_2{ height:200px; }
-.middle .right > .boxmenu_3{ height:150px; }
+.middle .right > .boxmenu_3{ height:150px; overflow-y:scroll; }
 
 .middle button{ background:none; border:1px solid #e1e1e1; border-radius:5px; padding:5px 20px; margin-right:10px; cursor:pointer; }
 
@@ -283,3 +283,7 @@ input:focus{ outline:none; }
     
     .gaming{ width:100% !important; left:0; }
 }
+
+/* map_kakao */
+
+.MapContainer{ height:200px; }
