@@ -70,7 +70,6 @@ function App() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(true);
-  const [locationSearch, setLocationSearch] = useState('');
   const [loading, setLoading] = useState(false);
 
   const clearInputs = () => {
@@ -195,20 +194,6 @@ function App() {
       setLoading(false);
     });
   };
-
-  // 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
-
-    var keyword = document.getElementById('keyword').value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
-
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
-}
 
   useEffect(()=>{
     authListener();
@@ -364,24 +349,7 @@ function searchPlaces() {
             <Board userCurrent={userCurrent} />
             <li className="right">
                 <div className="boxmenu_1"> <Member userRef={userRef} user={user} userCurrent={userCurrent} handleLogout={handleLogout}/> </div>
-                <div className="boxmenu_2">
-                  <Map />
-                </div>
-                <div className="boxmenu_3">
-                  <div id="menu_wrap" class="bg_white">
-                      <div class="option">
-                          <div>
-                              <form>
-                                  키워드 : <input type="text" onChange={(e)=>(setLocationSearch(e.target.value))} value={locationSearch} id="keyword" size="15" /> 
-                                  <button type="button" onClick={(e)=>(searchPlaces() )}>검색하기</button> 
-                              </form>
-                          </div>
-                      </div>
-                      <hr />
-                      <ul id="placesList"></ul>
-                      <div id="pagination"></div>
-                  </div>
-                </div>
+                <Map/>
             </li>
             </>
           ):(

@@ -114,6 +114,7 @@ function Home(){
                     <li id="rightBtn"><FontAwesomeIcon icon={faChevronRight} /></li>
                 </ul>
                 <ul className="slide">
+                    <li></li>
                     <li><img src={pUrl + '/images/img_1_layout_1.jpg'} /></li>
                     <li><img src={pUrl + '/images/img_2_layout_1.jpg'} /></li>
                     <li><img src={pUrl + '/images/img_3_layout_1.jpg'} /></li>

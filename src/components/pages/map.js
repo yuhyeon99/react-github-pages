@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react';
 const { kakao } = window;
 
 const Map = () => {
+    const [searchValue, setSearchValue] = useState('');
     useEffect(() => {
         // 마커를 담을 배열입니다
+// 마커를 담을 배열입니다
 var markers = [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -202,35 +204,54 @@ function displayPagination(pagination) {
             })(i);
         }
 
-                fragment.appendChild(el);
-            }
-            paginationEl.appendChild(fragment);
-        }
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
 
-        // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-        // 인포윈도우에 장소명을 표시합니다
-        function displayInfowindow(marker, title) {
-            var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
-        }
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
 
-        // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-        function removeAllChildNods(el) {   
-            while (el.hasChildNodes()) {
-                el.removeChild (el.lastChild);
-            }
-        }
+ // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
 
         
     }, []);
     return (
-        <div className="Map">
-            <div className="MapContainer" id="map">
-                
+        <>
+            <div className="boxmenu_2">
+                <div className="Map">
+                    <div className="MapContainer" id="map">
+                        
+                    </div>
+                </div>
             </div>
-        </div>
+            <div className="boxmenu_3">
+                <div id="menu_wrap" class="bg_white">
+                    <div class="option">
+                        <div>
+                            <form>
+                                키워드 : <input type="text" value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} id="keyword" size="15"/> 
+                                <button type="submit">검색하기</button> 
+                            </form>
+                        </div>
+                    </div>
+                    <hr/>
+                    <ul id="placesList"></ul>
+                    <div id="pagination"></div>
+                </div>
+            </div>
+        </>
     );
 }
 
